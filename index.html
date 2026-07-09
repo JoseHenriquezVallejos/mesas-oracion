@@ -2,7 +2,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('i');
     const btn = document.getElementById('btn-wa');
-    const URL_SCRIPT = "TU_URL_DE_GOOGLE_SCRIPT_AQUÍ";
+    const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbx_BXbo1v_8Poz--oaDl9ud7jOXgex_yvwXYkkMp6g4FNltTHg2bLyfZZdFxQphmYkd/exec";
 
     if (id) {
         fetch(URL_SCRIPT + "?i=" + id)
