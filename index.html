@@ -7,34 +7,40 @@
         body { font-family: sans-serif; text-align: center; padding: 50px; }
         .boton {
             display: block;
-            margin: 10px auto;
+            margin: 15px auto;
             padding: 15px 30px;
             font-size: 18px;
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: bold;
-            width: 250px;
+            width: 280px;
         }
+        /* Botón Mesa (Principal - Azul) */
+        .boton-mesa { background-color: #007bff; }
+        .boton-mesa:hover { background-color: #0056b3; }
+        
+        /* Botón WhatsApp (Secundario - Verde) */
         .boton-wa { background-color: #25D366; }
-        .boton-mesa { background-color: #007bff; } /* Color azul para mesa */
+        .boton-wa:hover { background-color: #128C7E; }
     </style>
 </head>
 <body>
     <h1>Bienvenido a la Mesa de Oración</h1>
+    <p>Elige una opción para continuar:</p>
     
-    <!-- Botón 1: WhatsApp -->
-    <a id="btn-wa" href="#" class="boton boton-wa">Cargando...</a>
-    
-    <!-- Botón 2: Nueva Mesa de Oración -->
+    <!-- Botón 1: Mesa de Oración (Ahora arriba) -->
     <a href="URL_DE_TU_MESA_AQUÍ" class="boton boton-mesa">Ir a la Mesa de Oración</a>
+    
+    <!-- Botón 2: WhatsApp (Ahora abajo) -->
+    <a id="btn-wa" href="#" class="boton boton-wa">Cargando...</a>
 
     <script>
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('i');
             const btn = document.getElementById('btn-wa');
-            const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbx_BXbo1v_8Poz--oaDl9ud7jOXgex_yvwXYkkMp6g4FNltTHg2bLyfZZdFxQphmYkd/exec"; 
+            const URL_SCRIPT = "PEGA_AQUÍ_TU_URL_DE_GOOGLE_SCRIPT"; 
 
             if (id && btn) {
                 fetch(URL_SCRIPT + "?i=" + id)
@@ -44,7 +50,8 @@
                             btn.href = "https://wa.me/" + telefono;
                             btn.innerText = "Enviar petición por WhatsApp";
                         } else {
-                            btn.innerText = "Iglesia no registrada";
+                            btn.innerText = "Código de iglesia no válido";
+                            btn.style.backgroundColor = "#ff4444";
                         }
                     });
             }
