@@ -5,24 +5,29 @@
     <title>Mesa de Oración</title>
     <style>
         body { font-family: sans-serif; text-align: center; padding: 50px; }
-        .boton-wa {
-            display: inline-block;
+        .boton {
+            display: block;
+            margin: 10px auto;
             padding: 15px 30px;
             font-size: 18px;
             color: white;
-            background-color: #25D366; /* El verde de WhatsApp */
             text-decoration: none;
             border-radius: 50px;
             font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 250px;
         }
-        .boton-wa:hover { background-color: #128C7E; }
+        .boton-wa { background-color: #25D366; }
+        .boton-mesa { background-color: #007bff; } /* Color azul para mesa */
     </style>
 </head>
 <body>
     <h1>Bienvenido a la Mesa de Oración</h1>
-    <p>Haz clic abajo para comenzar:</p>
-    <a id="btn-wa" href="#" class="boton-wa">Cargando...</a>
+    
+    <!-- Botón 1: WhatsApp -->
+    <a id="btn-wa" href="#" class="boton boton-wa">Cargando...</a>
+    
+    <!-- Botón 2: Nueva Mesa de Oración -->
+    <a href="URL_DE_TU_MESA_AQUÍ" class="boton boton-mesa">Ir a la Mesa de Oración</a>
 
     <script>
         window.onload = function() {
@@ -39,8 +44,7 @@
                             btn.href = "https://wa.me/" + telefono;
                             btn.innerText = "Enviar petición por WhatsApp";
                         } else {
-                            btn.innerText = "Código de iglesia no válido";
-                            btn.style.backgroundColor = "#ff4444"; // Rojo si falla
+                            btn.innerText = "Iglesia no registrada";
                         }
                     });
             }
