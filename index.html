@@ -29,10 +29,10 @@
     <h1>Bienvenido a la Mesa de Oración</h1>
     <p>Elige una opción para continuar:</p>
     
-    <!-- Botón 1: Mesa de Oración (Ahora arriba) -->
+    <!-- AHORA EL AZUL ESTÁ PRIMERO -->
     <a href="URL_DE_TU_MESA_AQUÍ" class="boton boton-mesa">Ir a la Mesa de Oración</a>
     
-    <!-- Botón 2: WhatsApp (Ahora abajo) -->
+    <!-- AHORA EL VERDE ESTÁ SEGUNDO -->
     <a id="btn-wa" href="#" class="boton boton-wa">Cargando...</a>
 
     <script>
@@ -40,7 +40,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('i');
             const btn = document.getElementById('btn-wa');
-            const URL_SCRIPT = "PEGA_AQUÍ_TU_URL_DE_GOOGLE_SCRIPT"; 
+            const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbx_BXbo1v_8Poz--oaDl9ud7jOXgex_yvwXYkkMp6g4FNltTHg2bLyfZZdFxQphmYkd/exec"; 
 
             if (id && btn) {
                 fetch(URL_SCRIPT + "?i=" + id)
