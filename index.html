@@ -3,17 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Mesa de Oración</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; }
+        .boton-wa {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: #25D366; /* El verde de WhatsApp */
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .boton-wa:hover { background-color: #128C7E; }
+    </style>
 </head>
 <body>
     <h1>Bienvenido a la Mesa de Oración</h1>
-    <a id="btn-wa" href="#">Cargando...</a>
+    <p>Haz clic abajo para comenzar:</p>
+    <a id="btn-wa" href="#" class="boton-wa">Cargando...</a>
 
     <script>
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('i');
             const btn = document.getElementById('btn-wa');
-            // AQUÍ DEBES PEGAR TU URL DEL GOOGLE SCRIPT QUE TERMINA EN /exec
             const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbx_BXbo1v_8Poz--oaDl9ud7jOXgex_yvwXYkkMp6g4FNltTHg2bLyfZZdFxQphmYkd/exec"; 
 
             if (id && btn) {
@@ -24,11 +39,10 @@
                             btn.href = "https://wa.me/" + telefono;
                             btn.innerText = "Enviar petición por WhatsApp";
                         } else {
-                            btn.innerText = "Iglesia no registrada";
+                            btn.innerText = "Código de iglesia no válido";
+                            btn.style.backgroundColor = "#ff4444"; // Rojo si falla
                         }
                     });
-            } else {
-                btn.innerText = "Error: Falta ID de iglesia";
             }
         };
     </script>
