@@ -1,18 +1,32 @@
-<script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('i');
-    const btn = document.getElementById('btn-wa');
-    const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbx_BXbo1v_8Poz--oaDl9ud7jOXgex_yvwXYkkMp6g4FNltTHg2bLyfZZdFxQphmYkd/exec";
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenido a tu Mesa de Oración</title>
+</head>
+<body>
+    <h1>Bienvenido a la Mesa de Oración</h1>
+    <!-- Asegúrate de que este id sea exactamente igual al del script abajo -->
+    <a id="btn-wa" href="#">Enviar petición por WhatsApp</a>
 
-    if (id) {
-        fetch(URL_SCRIPT + "?i=" + id)
-            .then(response => response.text())
-            .then(telefono => {
-                if (telefono !== "No encontrado") {
-                    btn.href = "https://wa.me/" + telefono;
-                } else {
-                    btn.innerText = "Iglesia no registrada";
-                }
-            });
-    }
-</script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('i');
+        const btn = document.getElementById('btn-wa'); // Aquí busca el id de arriba
+        const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbx_BXbo1v_8Poz--oaDl9ud7jOXgex_yvwXYkkMp6g4FNltTHg2bLyfZZdFxQphmYkd/exec";
+
+        if (btn && id) { // Verificamos que btn exista antes de usarlo
+            fetch(URL_SCRIPT + "?i=" + id)
+                .then(response => response.text())
+                .then(telefono => {
+                    if (telefono && telefono !== "No encontrado") {
+                        btn.href = "https://wa.me/" + telefono;
+                    } else {
+                        btn.innerText = "Iglesia no registrada";
+                    }
+                })
+                .catch(err => console.error("Error al conectar:", err));
+        }
+    </script>
+</body>
+</html>
