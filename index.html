@@ -5,36 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesa de Oración</title>
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; }
+        /* Estilos para centrado total (Vertical y Horizontal) */
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        /* Contenedor elegante */
+        .contenedor-principal {
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 { font-size: 24px; margin-bottom: 10px; }
+        p { margin-bottom: 25px; color: #555; }
+
         .boton {
             display: block;
             margin: 15px auto;
-            padding: 15px 30px;
+            padding: 15px 20px;
             font-size: 18px;
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: bold;
-            width: 280px;
+            width: 90%; /* Ajustable según el ancho del celular */
+            max-width: 300px;
         }
-        /* Botón Mesa (Principal - Azul) */
+
         .boton-mesa { background-color: #007bff; }
         .boton-mesa:hover { background-color: #0056b3; }
         
-        /* Botón WhatsApp (Secundario - Verde) */
         .boton-wa { background-color: #25D366; }
         .boton-wa:hover { background-color: #128C7E; }
     </style>
 </head>
 <body>
-    <h1>Bienvenido a la Mesa de Oración</h1>
-    <p>Elige una opción para continuar:</p>
-    
-    <!-- AHORA EL AZUL ESTÁ PRIMERO -->
-    <a href="https://sites.google.com/view/mesa-de-oracion/inicio" class="boton boton-mesa">Ir a la Mesa de Oración</a>
-    
-    <!-- AHORA EL VERDE ESTÁ SEGUNDO -->
-    <a id="btn-wa" href="#" class="boton boton-wa">Cargando...</a>
+
+    <div class="contenedor-principal">
+        <h1>Bienvenido a la Mesa de Oración</h1>
+        <p>Elige una opción para continuar:</p>
+        
+        <a href="https://sites.google.com/view/mesa-de-oracion/inicio" class="boton boton-mesa">Ir a la Mesa de Oración</a>
+        
+        <a id="btn-wa" href="#" class="boton boton-wa">Cargando...</a>
+    </div>
 
     <script>
         window.onload = function() {
@@ -54,7 +79,14 @@
                             btn.innerText = "Código de iglesia no válido";
                             btn.style.backgroundColor = "#ff4444";
                         }
+                    })
+                    .catch(() => {
+                        btn.innerText = "Error de conexión";
+                        btn.style.backgroundColor = "#ff4444";
                     });
+            } else if (btn) {
+                btn.innerText = "No se especificó iglesia";
+                btn.style.backgroundColor = "#777";
             }
         };
     </script>
