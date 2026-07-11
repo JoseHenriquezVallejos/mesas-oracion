@@ -10,11 +10,10 @@
         .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
         .header { background: #0f172a; color: white; padding: 15px; text-align: center; }
         
-        /* Ajuste: 'contain' muestra la foto completa sin cortar nada */
-        .swiper { width: 100%; height: 200px; background: #e2e8f0; }
+        /* Ajuste: padding para crear el marco y contain para no cortar la foto */
+        .swiper { width: 100%; height: 200px; background: #ffffff; padding: 10px; box-sizing: border-box; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
         
-        /* Grid de botones */
         .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
         .btn-action { background: #334155; color: white; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; }
         .btn-gold { background: #d4af37; }
