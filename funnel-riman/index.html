@@ -57,4 +57,29 @@
 
     const botones = [
         { text: "🚀 Plataforma", class: "btn-action btn-info", href: "https://wa.me/56945491173?text=Hola,%20quiero%20info%20de%20la%20plataforma" },
-        { text: "📈 Negocio Global", class: "btn-action btn-info", href: "
+        { text: "📈 Negocio Global", class: "btn-action btn-info", href: "https://wa.me/56945491173?text=Hola,%20quiero%20info%20del%20negocio" },
+        { text: "💼 Conversión", class: "btn-action btn-info", href: "https://wa.me/56945491173?text=Hola,%20quiero%20info%20de%20conversión" },
+        { text: "🤝 Aliado", class: "btn-action btn-info", href: "https://wa.me/56945491173?text=Hola,%20quiero%20ser%20aliado" },
+        { text: "🛍️ Ver Tienda", class: "btn-action btn-gold", href: info.tienda },
+        { text: "💬 WhatsApp", class: "btn-action btn-green", href: "https://wa.me/56945491173" },
+        { text: "¡Quiero ser Planner! 💎", class: "btn-action btn-diamond", href: info.tienda }
+    ];
+
+    botones.forEach(b => {
+        const btn = document.createElement('a');
+        btn.className = b.class;
+        btn.innerText = b.text;
+        btn.href = b.href;
+        btn.target = "_blank";
+        grid.appendChild(btn);
+    });
+
+    new Swiper('.swiper', {
+        loop: true,
+        autoplay: { delay: 3000, disableOnInteraction: false },
+        pagination: { el: '.swiper-pagination' },
+    });
+</script>
+
+</body>
+</html>
