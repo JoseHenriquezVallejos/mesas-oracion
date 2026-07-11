@@ -4,58 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Funnel Riman</title>
-    <!-- Estilos de Swiper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
-        :root { --header-bg: #0f172a; --btn-green: #0fb396; --btn-gold: #d4af37; }
+        :root { --header-bg: #0f172a; --btn-green: #0fb396; --btn-gold: #d4af37; --btn-info: #334155; --btn-diamond: #2563eb; }
         body { margin: 0; font-family: sans-serif; background: #f1f5f9; height: 100vh; display: flex; justify-content: center; }
         .chat-container { width: 100%; max-width: 700px; background: white; height: 100%; display: flex; flex-direction: column; }
-        .header { background: #0f172a; color: white; padding: 20px; text-align: center; }
+        .header { background: var(--header-bg); color: white; padding: 20px; text-align: center; }
         
-        .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; border-bottom: 1px solid #e2e8f0; }
-        .btn-action { background: #f8fafc; border: 1px solid #cbd5e1; padding: 15px; border-radius: 8px; cursor: pointer; text-align: center; color: #334155; font-weight: 600; text-decoration: none; }
-        .btn-gold { background: var(--btn-gold); color: white; }
-        .btn-green { background: var(--btn-green); color: white; }
+        /* Grid de botones mejorado */
+        .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
+        .btn-action { background: #f8fafc; border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; cursor: pointer; text-align: center; color: #334155; font-weight: 600; text-decoration: none; font-size: 14px; }
+        .btn-gold { background: var(--btn-gold); color: white; border: none; }
+        .btn-green { background: var(--btn-green); color: white; border: none; }
+        .btn-info { background: var(--btn-info); color: white; border: none; }
+        .btn-diamond { background: var(--btn-diamond); color: white; border: none; grid-column: span 2; }
         
         #chat-history { flex: 1; overflow-y: auto; padding: 20px; background: #f8fafc; }
-        /* Ajuste del carrusel */
-        .swiper { width: 100%; height: 300px; border-radius: 12px; margin-bottom: 20px; }
+        .swiper { width: 100%; height: 300px; border-radius: 10px; margin-bottom: 15px; background: #e2e8f0; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: contain; }
     </style>
 </head>
 <body>
 
 <div class="chat-container">
-    <div class="header"><h1>Riman Academy</h1></div>
+    <div class="header"><h1 id="prod-name">Riman Academy</h1></div>
     
-    <div class="button-grid">
-        <a href="https://mall.riman.com/ais21/products" class="btn-action btn-gold" target="_blank">🛍️ Ver Tienda</a>
-        <a href="https://wa.me/56945491173" class="btn-action btn-green" target="_blank">💬 WhatsApp</a>
-    </div>
+    <div class="button-grid" id="menu-acciones"></div>
     
     <div id="chat-history">
-        <!-- Carrusel cargado directamente -->
+        <!-- Carrusel -->
         <div class="swiper">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="1.png" alt="Plataforma"></div>
-                <div class="swiper-slide"><img src="2.png" alt="Negocio"></div>
-                <div class="swiper-slide"><img src="3.png" alt="Conversión"></div>
-                <div class="swiper-slide"><img src="4.png" alt="Aliado"></div>
-                <div class="swiper-slide"><img src="5.png" alt="Planner"></div>
+                <div class="swiper-slide"><img src="1.png"></div>
+                <div class="swiper-slide"><img src="2.png"></div>
+                <div class="swiper-slide"><img src="3.png"></div>
+                <div class="swiper-slide"><img src="4.png"></div>
+                <div class="swiper-slide"><img src="5.png"></div>
             </div>
             <div class="swiper-pagination"></div>
         </div>
-        <div class="msg" style="background:white; padding:15px; border-radius:10px;">¡Bienvenido! Desliza las imágenes para conocer nuestra propuesta y elige uno de los botones de arriba para avanzar.</div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    new Swiper('.swiper', {
-        pagination: { el: '.swiper-pagination' },
-        loop: true,
-        autoplay: { delay: 3000 }
+    const info = { whatsapp: "56945491173", tienda: "https://mall.riman.com/ais21/products" };
+    const grid = document.getElementById('menu-acciones');
+
+    const botones = [
+        { text: "🚀 Plataforma", class: "btn-action btn-info" },
+        { text: "📈 Negocio Global", class: "btn-action btn-info" },
+        { text: "💼 Conversión", class: "btn-action btn-info" },
+        { text: "🤝 Aliado", class: "btn-action btn-info" },
+        { text: "🛍️ Ver Tienda", class: "btn-action btn-gold", type: "link", href: info.tienda },
+        { text: "💬 WhatsApp", class: "btn-action btn-green", type: "link", href: `https://wa.me/${info.whatsapp}` },
+        { text: "¡Quiero ser Planner! 💎", class: "btn-action btn-diamond", type: "link", href: info.tienda }
+    ];
+
+    botones.forEach(b => {
+        const btn = document.createElement(b.type === "link" ? 'a' : 'button');
+        btn.className = b.class;
+        btn.innerText = b.text;
+        if(b.type === "link") { btn.href = b.href; btn.target = "_blank"; }
+        grid.appendChild(btn);
     });
+
+    new Swiper('.swiper', { pagination: { el: '.swiper-pagination' }, loop: true });
 </script>
 </body>
 </html>
