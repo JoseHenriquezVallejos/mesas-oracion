@@ -2,84 +2,57 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Funnel Riman</title>
+    <!-- Importamos los estilos de Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
-        :root { --header-bg: #0f172a; --btn-green: #0fb396; --btn-gold: #d4af37; --btn-info: #334155; --btn-diamond: #2563eb; }
-        * { box-sizing: border-box; }
-        body { margin: 0; padding: 0; font-family: sans-serif; background-color: #f1f5f9; height: 100vh; display: flex; justify-content: center; }
-        .chat-container { width: 100%; max-width: 700px; background: white; height: 100%; display: flex; flex-direction: column; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
-        .header-premium { background-color: var(--header-bg); color: white; padding: 20px; text-align: center; }
+        :root { --header-bg: #0f172a; --btn-green: #0fb396; --btn-gold: #d4af37; --btn-info: #334155; }
+        body { margin: 0; font-family: sans-serif; background: #f1f5f9; height: 100vh; display: flex; justify-content: center; }
+        .chat-container { width: 100%; max-width: 700px; background: white; height: 100%; display: flex; flex-direction: column; }
+        .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
+        .btn-action { background: #f8fafc; border: 1px solid #cbd5e1; padding: 15px; border-radius: 8px; cursor: pointer; text-align: center; color: #334155; font-weight: 600; text-decoration: none; }
+        .btn-gold { background: var(--btn-gold); color: white; }
         
-        .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; border-bottom: 1px solid #e2e8f0; }
-        .btn-action { background: #f8fafc; border: 1px solid #cbd5e1; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: 600; text-align: center; text-decoration: none; color: #334155; display: flex; align-items: center; justify-content: center; }
-        .btn-gold { background: var(--btn-gold); color: white; border: none; }
-        .btn-green { background: var(--btn-green); color: white; border: none; }
-        .btn-info { background: var(--btn-info); color: white; border: none; }
-        .btn-diamond { background: var(--btn-diamond); color: white; border: none; grid-column: span 2; }
-        
-        #chat-history { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; background-color: #f8fafc; }
-        .msg { padding: 12px; border-radius: 10px; max-width: 90%; background: white; border: 1px solid #e2e8f0; align-self: flex-start; }
+        /* Ajustes del carrusel en el chat */
+        #chat-history { flex: 1; overflow-y: auto; padding: 20px; background: #f8fafc; }
+        .swiper { width: 100%; height: 250px; border-radius: 10px; }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
 <body>
 
 <div class="chat-container">
-    <div class="header-premium">
-        <h1 id="prod-name">Riman Academy</h1>
-        <p>Bienestar y oportunidad para tu vida.</p>
+    <div style="background: #0f172a; color: white; padding: 20px; text-align: center;"><h1>Riman Academy</h1></div>
+    
+    <div class="button-grid" id="menu-acciones">
+        <button class="btn-action" onclick="mostrarCarrusel()">Ver Presentación 📸</button>
+        <a href="#" class="btn-action btn-gold" id="btn-tienda" target="_blank">🛍️ Ver Tienda</a>
     </div>
     
-    <div class="button-grid" id="menu-acciones"></div>
-    
     <div id="chat-history">
-        <div class="msg">¡Hola! Bienvenido a Riman Academy. Elige una opción para continuar.</div>
+        <div class="msg" style="background:white; padding:10px; border-radius:10px;">¡Hola! Haz clic en "Ver Presentación" para navegar por nuestras imágenes.</div>
     </div>
 </div>
 
+<!-- Script de Swiper -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const idCapturado = urlParams.get('id'); 
-    
-    const db = {
-        "josehenriquez": { whatsapp: "56945491173", tienda: "https://mall.riman.com/ais21/products" }
-    };
+    // Tu lista de imágenes (deben estar en tu carpeta)
+    const imagenes = ["1.png", "2.png", "3.png", "4.png", "5.png"];
 
-    const info = db[idCapturado] || { whatsapp: "56945491173", tienda: "https://mall.riman.com/ais21/products" };
-    document.getElementById('prod-name').innerText = "Riman - " + (idCapturado ? idCapturado.charAt(0).toUpperCase() + idCapturado.slice(1) : "Bienvenido");
-
-    const grid = document.getElementById('menu-acciones');
-
-    const botones = [
-        { text: "🚀 Plataforma Riman", class: "btn-action btn-info", type: "info", content: "<b>Tu Plataforma de Ventas Riman 🚀</b><br><br>El funnel 'llave en mano' elimina las complicaciones técnicas de tu página actual. Al unirte a mi equipo, implemento este sistema en tu estructura, permitiéndote operar con una plataforma profesional desde el primer día, sin tener que construir nada desde cero." },
-        { text: "📈 Negocio Global", class: "btn-action btn-info", type: "info", content: "<b>Negocio Internacional sin Costo 📈</b><br><br>Escalar Riman a nivel global exige una infraestructura que sostenga el crecimiento. Como parte de nuestra red, no pagas por la tecnología; yo te facilito el sistema de ventas probado para que tu enfoque esté 100% en la gestión y el desarrollo de tu propio negocio." },
-        { text: "💼 Conversión Automática", class: "btn-action btn-info", type: "info", content: "<b>Sistema de Conversión Automática 💼</b><br><br>La falta de estructura es la principal barrera para convertir prospectos en clientes. Este sistema está diseñado para elevar tu oferta y profesionalizar tu presentación digital, transformando tu página en una herramienta que trabaja para ti de forma constante." },
-        { text: "🤝 Aliado Estratégico", class: "btn-action btn-info", type: "info", content: "<b>Aliado Estratégico de Riman 🤝</b><br><br>Representar una marca internacional con respaldo tecnológico es tu ventaja competitiva definitiva. ¿Quieres esta plataforma gratis y asegurar tu posición en nuestra red? Da clic abajo en el botón: <b>¡Quiero Convertirme en Planner!</b>" },
-        { text: "🛍️ Ver Tienda", class: "btn-action btn-gold", href: info.tienda, type: "link" },
-        { text: "💬 Hablar con asesor", class: "btn-action btn-green", href: `https://wa.me/${info.whatsapp}`, type: "link" },
-        { text: "¡Quiero Convertirme en Planner! 💎", class: "btn-action btn-diamond", href: info.tienda, type: "link" }
-    ];
-
-    botones.forEach(b => {
-        const btn = document.createElement(b.type === "link" ? 'a' : 'button');
-        btn.className = b.class;
-        btn.innerText = b.text;
-        if(b.type === "link") {
-            btn.href = b.href;
-            btn.target = "_blank";
-        } else {
-            btn.onclick = () => mostrarMensaje(b.content);
-        }
-        grid.appendChild(btn);
-    });
-
-    function mostrarMensaje(contenido) {
+    function mostrarCarrusel() {
         const history = document.getElementById('chat-history');
-        const msg = document.createElement('div');
-        msg.className = "msg";
-        msg.style.backgroundColor = "#e2e8f0";
-        msg.innerHTML = contenido;
-        history.appendChild(msg);
+        let slides = imagenes.map(img => `<div class="swiper-slide"><img src="${img}"></div>`).join('');
+        
+        history.innerHTML += `
+            <div class="swiper">
+                <div class="swiper-wrapper">${slides}</div>
+                <div class="swiper-pagination"></div>
+            </div>`;
+
+        new Swiper('.swiper', { pagination: { el: '.swiper-pagination' }, loop: true });
         history.scrollTop = history.scrollHeight;
     }
 </script>
