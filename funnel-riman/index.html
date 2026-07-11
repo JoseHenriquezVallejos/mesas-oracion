@@ -7,50 +7,47 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
         :root { --header-bg: #0f172a; --btn-green: #0fb396; --btn-gold: #d4af37; --btn-info: #334155; --btn-diamond: #2563eb; }
-        body { margin: 0; font-family: sans-serif; background: #f1f5f9; height: 100vh; display: flex; justify-content: center; }
-        .chat-container { width: 100%; max-width: 700px; background: white; height: 100%; display: flex; flex-direction: column; overflow-y: auto; }
+        body { margin: 0; font-family: sans-serif; background: #f1f5f9; display: flex; justify-content: center; min-height: 100vh; }
+        .chat-container { width: 100%; max-width: 700px; background: white; display: flex; flex-direction: column; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         .header { background: var(--header-bg); color: white; padding: 20px; text-align: center; }
         
-        /* Ajustes de carrusel */
-        .swiper { width: 100%; height: 300px; background: #e2e8f0; }
-        .swiper-slide img { width: 100%; height: 100%; object-fit: contain; }
-
-        /* Grid de botones */
+        /* Carrusel Corregido */
+        .swiper { width: 100%; height: 350px; background: #000; }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        
+        /* Botones */
         .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
-        .btn-action { background: #f8fafc; border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; cursor: pointer; text-align: center; color: #334155; font-weight: 600; text-decoration: none; font-size: 14px; }
+        .btn-action { background: #f8fafc; border: 1px solid #cbd5e1; padding: 15px; border-radius: 8px; cursor: pointer; text-align: center; color: #334155; font-weight: 600; text-decoration: none; font-size: 14px; transition: 0.3s; }
         .btn-gold { background: var(--btn-gold); color: white; border: none; }
         .btn-green { background: var(--btn-green); color: white; border: none; }
         .btn-info { background: var(--btn-info); color: white; border: none; }
-        .btn-diamond { background: var(--btn-diamond); color: white; border: none; grid-column: span 2; }
+        .btn-diamond { background: var(--btn-diamond); color: white; border: none; grid-column: span 2; font-size: 16px; }
         
-        /* Botón de WhatsApp Flotante */
-        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
+        /* WhatsApp flotante */
+        .whatsapp-float { position: fixed; bottom: 25px; right: 25px; z-index: 9999; }
     </style>
 </head>
 <body>
 
 <div class="chat-container">
-    <div class="header"><h1 id="prod-name">Riman Academy</h1></div>
-    
-    <!-- 1. CARRUSEL (Primero) -->
+    <div class="header"><h1>Riman Academy</h1></div>
+
     <div class="swiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="1.jpg"></div>
-            <div class="swiper-slide"><img src="2.jpg"></div>
-            <div class="swiper-slide"><img src="3.jpg"></div>
-            <div class="swiper-slide"><img src="4.jpg"></div>
-            <div class="swiper-slide"><img src="5.jpg"></div>
+            <div class="swiper-slide"><img src="1.jpg" alt="Imagen 1"></div>
+            <div class="swiper-slide"><img src="2.jpg" alt="Imagen 2"></div>
+            <div class="swiper-slide"><img src="3.jpg" alt="Imagen 3"></div>
+            <div class="swiper-slide"><img src="4.jpg" alt="Imagen 4"></div>
+            <div class="swiper-slide"><img src="5.jpg" alt="Imagen 5"></div>
         </div>
         <div class="swiper-pagination"></div>
     </div>
 
-    <!-- 2. BOTONES -->
     <div class="button-grid" id="menu-acciones"></div>
 </div>
 
-<!-- 3. CHAT FLOTANTE -->
 <a href="https://wa.me/56945491173" class="whatsapp-float" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="60" alt="Chat">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="60" alt="WhatsApp">
 </a>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -59,29 +56,5 @@
     const grid = document.getElementById('menu-acciones');
 
     const botones = [
-        { text: "🚀 Plataforma", class: "btn-action btn-info", type: "link", href: `https://wa.me/${info.whatsapp}?text=Hola,%20quisiera%20consultar%20sobre%20la%20plataforma` },
-        { text: "📈 Negocio Global", class: "btn-action btn-info", type: "link", href: `https://wa.me/${info.whatsapp}?text=Hola,%20quisiera%20consultar%20sobre%20el%20negocio%20global` },
-        { text: "💼 Conversión", class: "btn-action btn-info", type: "link", href: `https://wa.me/${info.whatsapp}?text=Hola,%20quisiera%20consultar%20sobre%20conversión` },
-        { text: "🤝 Aliado", class: "btn-action btn-info", type: "link", href: `https://wa.me/${info.whatsapp}?text=Hola,%20quiero%20ser%20aliado` },
-        { text: "🛍️ Ver Tienda", class: "btn-action btn-gold", type: "link", href: info.tienda },
-        { text: "💬 WhatsApp", class: "btn-action btn-green", type: "link", href: `https://wa.me/${info.whatsapp}` },
-        { text: "¡Quiero ser Planner! 💎", class: "btn-action btn-diamond", type: "link", href: info.tienda }
-    ];
-
-    botones.forEach(b => {
-        const btn = document.createElement('a');
-        btn.className = b.class;
-        btn.innerText = b.text;
-        btn.href = b.href;
-        btn.target = "_blank";
-        grid.appendChild(btn);
-    });
-
-    new Swiper('.swiper', {
-        pagination: { el: '.swiper-pagination' },
-        loop: true,
-        autoplay: { delay: 3000, disableOnInteraction: false },
-    });
-</script>
-</body>
-</html>
+        { text: "🚀 Plataforma", class: "btn-action btn-info", href: "https://wa.me/56945491173?text=Hola,%20quiero%20info%20de%20la%20plataforma" },
+        { text: "📈 Negocio Global", class: "btn-action btn-info", href: "
