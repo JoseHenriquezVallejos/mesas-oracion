@@ -11,23 +11,23 @@
         .header { background: var(--header-bg); color: white; padding: 20px; text-align: center; }
         #chat-history { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
         .msg { padding: 12px; border-radius: 10px; max-width: 85%; }
-        .bot-msg { background: #f1f5f9; align-self: flex-start; }
-        .button-area { padding: 20px; display: flex; flex-direction: column; gap: 10px; border-top: 1px solid #e2e8f0; }
-        .btn-action { padding: 15px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; text-decoration: none; text-align: center; color: white; }
+        .bot-msg { background: #f1f5f9; align-self: flex-start; color: #334155; }
+        .button-area { padding: 20px; display: flex; flex-direction: column; gap: 15px; border-top: 1px solid #e2e8f0; }
+        .btn-action { padding: 18px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; text-decoration: none; text-align: center; color: white; font-size: 16px; }
     </style>
 </head>
 <body>
 
 <div class="chat-container">
     <div class="header">
-        <h1 id="user-name">Hola</h1>
+        <h1 id="user-name">Riman Academy</h1>
         <p>¿En qué puedo ayudarte hoy?</p>
     </div>
     <div id="chat-history">
         <div class="msg bot-msg">¡Hola! Soy tu asistente virtual de Riman. Estoy aquí para resolver tus dudas sobre nuestros productos o el modelo de negocio.</div>
     </div>
     <div class="button-area" id="actions">
-        <!-- Los botones se generarán aquí -->
+        <!-- Los botones de acción se generan aquí -->
     </div>
 </div>
 
@@ -36,11 +36,12 @@
     const id = urlParams.get('id') || 'cliente';
     document.getElementById('user-name').innerText = "Riman - " + id.charAt(0).toUpperCase() + id.slice(1);
 
-    // Datos por ID
+    // Datos dinámicos por ID
     const db = {
         "josehenriquez": { whatsapp: "56945491173", tienda: "https://mall.riman.com/ais21/products" }
     };
-    const info = db[id] || { whatsapp: "56945491173", tienda: "#" };
+    
+    const info = db[id] || { whatsapp: "56945491173", tienda: "https://mall.riman.com/ais21/products" };
 
     const actions = [
         { text: "🛍️ Ver catálogo", href: info.tienda, color: "#d4af37" },
