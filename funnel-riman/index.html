@@ -2,21 +2,25 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Funnel Riman</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
-        body { margin: 0; font-family: sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
-        .chat-container { width: 100%; max-width: 700px; background: white; min-height: 100vh; }
+        body { margin: 0; font-family: sans-serif; background: #f1f5f9; display: flex; justify-content: center; min-height: 100vh; }
+        .chat-container { width: 100%; max-width: 700px; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         .header { background: #0f172a; color: white; padding: 20px; text-align: center; }
         
+        /* Ajustes de Imagen para que no se achique */
         .swiper { width: 100%; height: 350px; background: #000; }
-        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
         
         .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
-        .btn-action { background: #334155; color: white; padding: 15px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; }
+        .btn-action { background: #334155; color: white; padding: 15px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; }
         .btn-gold { background: #d4af37; }
         .btn-green { background: #0fb396; }
-        .btn-diamond { background: #2563eb; grid-column: span 2; }
+        .btn-diamond { background: #2563eb; grid-column: span 2; font-size: 16px; }
+        
+        .whatsapp-float { position: fixed; bottom: 25px; right: 25px; z-index: 9999; }
     </style>
 </head>
 <body>
@@ -24,27 +28,34 @@
 <div class="chat-container">
     <div class="header"><h1>Riman Academy</h1></div>
     
+    <!-- Carrusel -->
     <div class="swiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="1.jpg"></div>
-            <div class="swiper-slide"><img src="2.jpg"></div>
-            <div class="swiper-slide"><img src="3.jpg"></div>
-            <div class="swiper-slide"><img src="4.jpg"></div>
-            <div class="swiper-slide"><img src="5.jpg"></div>
+            <div class="swiper-slide"><img src="1.jpg" alt="Imagen 1"></div>
+            <div class="swiper-slide"><img src="2.jpg" alt="Imagen 2"></div>
+            <div class="swiper-slide"><img src="3.jpg" alt="Imagen 3"></div>
+            <div class="swiper-slide"><img src="4.jpg" alt="Imagen 4"></div>
+            <div class="swiper-slide"><img src="5.jpg" alt="Imagen 5"></div>
         </div>
         <div class="swiper-pagination"></div>
     </div>
 
+    <!-- Botones -->
     <div class="button-grid">
-        <a href="https://wa.me/56945491173" class="btn-action">🚀 Plataforma</a>
-        <a href="https://wa.me/56945491173" class="btn-action">📈 Negocio Global</a>
-        <a href="https://wa.me/56945491173" class="btn-action">💼 Conversión</a>
-        <a href="https://wa.me/56945491173" class="btn-action">🤝 Aliado</a>
+        <a href="https://wa.me/56945491173?text=Hola,%20quiero%20info%20de%20la%20plataforma" class="btn-action">🚀 Plataforma</a>
+        <a href="https://wa.me/56945491173?text=Hola,%20quiero%20info%20del%20negocio" class="btn-action">📈 Negocio Global</a>
+        <a href="https://wa.me/56945491173?text=Hola,%20quiero%20info%20de%20conversión" class="btn-action">💼 Conversión</a>
+        <a href="https://wa.me/56945491173?text=Hola,%20quiero%20ser%20aliado" class="btn-action">🤝 Aliado</a>
         <a href="https://mall.riman.com/ais21/products" class="btn-action btn-gold">🛍️ Ver Tienda</a>
         <a href="https://wa.me/56945491173" class="btn-action btn-green">💬 WhatsApp</a>
         <a href="https://mall.riman.com/ais21/products" class="btn-action btn-diamond">¡Quiero ser Planner! 💎</a>
     </div>
 </div>
+
+<!-- WhatsApp flotante -->
+<a href="https://wa.me/56945491173" class="whatsapp-float" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="60" alt="WhatsApp">
+</a>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
