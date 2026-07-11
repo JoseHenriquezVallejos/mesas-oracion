@@ -3,61 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
-    <title>Atención Riman</title>
+    <title>Riman Academy</title>
     <style>
-        :root { --header-bg: #0f172a; --btn-green: #0fb396; --btn-gold: #d4af37; }
-        body { font-family: sans-serif; background: #f1f5f9; margin: 0; display: flex; justify-content: center; height: 100vh; }
-        .chat-container { width: 100%; max-width: 500px; background: white; height: 100%; display: flex; flex-direction: column; }
-        .header { background: var(--header-bg); color: white; padding: 20px; text-align: center; }
-        #chat-history { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .msg { padding: 12px; border-radius: 10px; max-width: 85%; }
-        .bot-msg { background: #f1f5f9; align-self: flex-start; color: #334155; }
-        .button-area { padding: 20px; display: flex; flex-direction: column; gap: 15px; border-top: 1px solid #e2e8f0; }
-        .btn-action { padding: 18px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; text-decoration: none; text-align: center; color: white; font-size: 16px; }
+        :root { --header-bg: #0f172a; --page-bg: #f1f5f9; --btn-green: #0fb396; --btn-gold: #d4af37; }
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 0; font-family: sans-serif; background-color: var(--page-bg); height: 100vh; display: flex; justify-content: center; }
+        .chat-container { width: 100%; max-width: 700px; background: white; height: 100%; display: flex; flex-direction: column; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        .header-premium { background-color: var(--header-bg); color: white; padding: 20px; text-align: center; }
+        .button-grid { display: flex; flex-direction: column; gap: 10px; padding: 15px; }
+        .btn-option { background: #f8fafc; border: 1px solid #cbd5e1; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: 600; text-align: center; text-decoration: none; color: #334155; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+        .btn-option:hover { opacity: 0.9; }
+        .btn-green { background: var(--btn-green); color: white; border: none; }
+        .btn-gold { background: var(--btn-gold); color: white; border: none; }
+        #chat-history { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .msg { padding: 12px; border-radius: 10px; max-width: 90%; }
+        .bot-msg { background: #f8fafc; border: 1px solid #e2e8f0; align-self: flex-start; color: #334155; }
     </style>
 </head>
 <body>
 
 <div class="chat-container">
-    <div class="header">
-        <h1 id="user-name">Riman Academy</h1>
-        <p>¿En qué puedo ayudarte hoy?</p>
+    <div class="header-premium">
+        <h1 id="prod-name">Riman Academy</h1>
+        <p>Bienestar y oportunidad para tu vida.</p>
     </div>
     <div id="chat-history">
-        <div class="msg bot-msg">¡Hola! Soy tu asistente virtual de Riman. Estoy aquí para resolver tus dudas sobre nuestros productos o el modelo de negocio.</div>
+        <div class="msg bot-msg">¡Hola! Soy tu asistente virtual de Riman. Estoy aquí para resolver tus dudas sobre nuestros productos o el modelo de negocio. ¿En qué puedo ayudarte hoy?</div>
     </div>
-    <div class="button-area" id="actions">
-        <!-- Los botones de acción se generan aquí -->
-    </div>
+    <div class="button-grid" id="menu-acciones"></div>
 </div>
 
 <script>
+    // 1. Obtener ID de la URL
     const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id') || 'cliente';
-    document.getElementById('user-name').innerText = "Riman - " + id.charAt(0).toUpperCase() + id.slice(1);
-
-    // Datos dinámicos por ID
+    const idCapturado = urlParams.get('id'); 
+    
+    // 2. Base de datos
     const db = {
         "josehenriquez": { whatsapp: "56945491173", tienda: "https://mall.riman.com/ais21/products" }
     };
-    
-    const info = db[id] || { whatsapp: "56945491173", tienda: "https://mall.riman.com/ais21/products" };
 
-    const actions = [
-        { text: "🛍️ Ver catálogo", href: info.tienda, color: "#d4af37" },
-        { text: "💬 Hablar con un asesor", href: `https://wa.me/${info.whatsapp}`, color: "#0fb396" }
-    ];
+    const info = db[idCapturado] || { whatsapp: "56945491173", tienda: "https://mall.riman.com/ais21/products" };
+    document.getElementById('prod-name').innerText = "Riman - " + (idCapturado ? idCapturado.charAt(0).toUpperCase() + idCapturado.slice(1) : "Bienvenido");
 
-    const area = document.getElementById('actions');
-    actions.forEach(a => {
-        const btn = document.createElement('a');
-        btn.innerText = a.text;
-        btn.href = a.href;
-        btn.target = "_blank";
-        btn.className = "btn-action";
-        btn.style.backgroundColor = a.color;
-        area.appendChild(btn);
-    });
+    // 3. Crear botones de acción
+    const grid = document.getElementById('menu-acciones');
+
+    // Botón Tienda
+    const linkTienda = document.createElement('a');
+    linkTienda.href = info.tienda;
+    linkTienda.target = "_blank";
+    linkTienda.className = 'btn-option btn-gold';
+    linkTienda.innerText = "🛍️ Ver Tienda Riman";
+    grid.appendChild(linkTienda);
+
+    // Botón WhatsApp
+    const linkWA = document.createElement('a');
+    linkWA.href = `https://wa.me/${info.whatsapp}`;
+    linkWA.target = "_blank";
+    linkWA.className = 'btn-option btn-green';
+    linkWA.innerText = "💬 Hablar con un asesor";
+    grid.appendChild(linkWA);
 </script>
 </body>
 </html>
