@@ -11,13 +11,11 @@
         .chat-container { width: 100%; max-width: 700px; background: white; height: 100%; display: flex; flex-direction: column; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
         .header-premium { background-color: var(--header-bg); color: white; padding: 20px; text-align: center; }
         
-        /* Botones ARRIBA */
         .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; border-bottom: 1px solid #e2e8f0; }
         .btn-action { background: #f8fafc; border: 1px solid #cbd5e1; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: 600; text-align: center; text-decoration: none; color: #334155; display: flex; align-items: center; justify-content: center; }
         .btn-gold { background: var(--btn-gold); color: white; border: none; }
         .btn-green { background: var(--btn-green); color: white; border: none; }
         
-        /* Chat ABAJO */
         #chat-history { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; background-color: #f8fafc; }
         .msg { padding: 12px; border-radius: 10px; max-width: 90%; background: white; border: 1px solid #e2e8f0; align-self: flex-start; }
     </style>
@@ -30,12 +28,10 @@
         <p>Bienestar y oportunidad para tu vida.</p>
     </div>
     
-    <!-- Botones de Acción ARRIBA -->
     <div class="button-grid" id="menu-acciones"></div>
     
-    <!-- Chat ABAJO -->
     <div id="chat-history">
-        <div class="msg">¡Hola! Soy tu asistente virtual de Riman. Estoy aquí para ayudarte. ¿Qué deseas explorar hoy?</div>
+        <div class="msg">¡Hola! Bienvenido a Riman Academy. Por favor, <b>elige una de las opciones de arriba</b> para continuar con tu consulta o ver nuestro catálogo.</div>
     </div>
 </div>
 
@@ -43,7 +39,6 @@
     const urlParams = new URLSearchParams(window.location.search);
     const idCapturado = urlParams.get('id'); 
     
-    // Base de datos
     const db = {
         "josehenriquez": { whatsapp: "56945491173", tienda: "https://mall.riman.com/ais21/products" }
     };
@@ -53,7 +48,6 @@
 
     const grid = document.getElementById('menu-acciones');
 
-    // Botones
     const botones = [
         { text: "🛍️ Ver Tienda", class: "btn-action btn-gold", href: info.tienda },
         { text: "💬 Hablar con asesor", class: "btn-action btn-green", href: `https://wa.me/${info.whatsapp}` }
