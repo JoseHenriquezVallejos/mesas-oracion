@@ -69,7 +69,18 @@
         grid.appendChild(btn);
     });
 
-    new Swiper('.swiper', { pagination: { el: '.swiper-pagination' }, loop: true });
+    new Swiper('.swiper', {
+          pagination: {
+            el: '.swiper-pagination'
+          },
+          loop: true,
+    // Agrega estas líneas para el movimiento automático:
+          autoplay: {
+            delay: 3000, // Cambia la imagen cada 3 segundos
+            disableOnInteraction: false, // Sigue moviéndose aunque el usuario haga clic
+          },
+    });
+    
 </script>
 </body>
 </html>
