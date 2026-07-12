@@ -8,12 +8,13 @@
     <style>
         body { margin: 0; font-family: sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
         .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
-        .header { background: #0f172a; color: white; padding: 20px; text-align: center; }
+        .header { background: #0f172a; color: white; padding: 25px; text-align: center; }
         .header h1 { margin: 0; font-size: 24px; font-weight: bold; }
         
-        /* Carruseles */
         .swiper { width: 100%; height: 250px; background: #ffffff; padding: 10px; box-sizing: border-box; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
+        
+        .section-title { padding: 20px 15px 10px 15px; font-weight: bold; color: #1e293b; font-size: 18px; }
         
         .faq-section { padding: 15px; }
         .accordion { background: #334155; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; }
@@ -24,8 +25,6 @@
         .btn-gold { background: #d4af37; }
         .btn-green { background: #0fb396; }
         .btn-diamond { background: #2563eb; grid-column: span 2; font-size: 16px; padding: 12px; }
-        
-        .section-title { padding: 15px 15px 0 15px; font-weight: bold; color: #1e293b; }
     </style>
 </head>
 <body>
@@ -74,7 +73,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    // Inicializar ambos carruseles
+    // Inicializar carruseles
     new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
     new Swiper('.test-swiper', { loop: true, pagination: { el: '.swiper-pagination' } });
 
@@ -85,22 +84,24 @@
         const id = params.get('id');
         if (!id) return;
 
-        const res = await fetch(SHEET_URL);
-        const data = await res.text();
-        const rows = data.split('\n').map(r => r.split(','));
-        const user = rows.find(r => r[0] && r[0].trim() === id.trim());
+        try {
+            const res = await fetch(SHEET_URL);
+            const data = await res.text();
+            const rows = data.split('\n').map(r => r.split(','));
+            const user = rows.find(r => r[0] && r[0].trim() === id.trim());
 
-        if (user) {
-            document.getElementById('nombre-visual').innerText = user[1].trim();
-            document.getElementById('btn-wa').href = 'https://wa.me/' + user[2].trim();
-            document.getElementById('btn-tienda').href = user[3].trim();
-            document.getElementById('btn-planner').href = user[3].trim();
-            
-            for(let i=0; i<5; i++) {
-                document.getElementById('f' + (i+1)).src = user[4+i].trim();
-                document.getElementById('t' + (i+1)).src = user[9+i].trim();
+            if (user) {
+                document.getElementById('nombre-visual').innerText = user[1].trim();
+                document.getElementById('btn-wa').href = 'https://wa.me/' + user[2].trim();
+                document.getElementById('btn-tienda').href = user[3].trim();
+                document.getElementById('btn-planner').href = user[3].trim();
+                
+                for(let i=0; i<5; i++) {
+                    document.getElementById('f' + (i+1)).src = user[4+i].trim();
+                    document.getElementById('t' + (i+1)).src = user[9+i].trim();
+                }
             }
-        }
+        } catch (e) { console.error("Error al cargar:", e); }
     }
     init();
 
