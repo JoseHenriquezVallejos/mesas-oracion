@@ -8,7 +8,11 @@
     <style>
         body { margin: 0; font-family: sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
         .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
-        .header { background: #0f172a; color: white; padding: 15px; text-align: center; }
+        
+        /* Encabezado con Logo */
+        .header { background: #0f172a; color: white; padding: 15px; display: flex; align-items: center; gap: 15px; }
+        .header img { height: 45px; width: 45px; border-radius: 5px; object-fit: cover; }
+        .header h1 { margin: 0; font-size: 20px; }
         
         .swiper { width: 100%; height: 200px; background: #ffffff; padding: 10px; box-sizing: border-box; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
@@ -27,8 +31,13 @@
 <body>
 
 <div class="chat-container">
-    <div class="header"><h1>Riman Academy</h1></div>
+    <!-- Encabezado con Logo -->
+    <div class="header">
+        <img src="logo.jpg" alt="Logo Riman">
+        <h1>Riman Academy</h1>
+    </div>
     
+    <!-- Carrusel Automático -->
     <div class="swiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide"><img src="1.jpg" alt="Imagen 1"></div>
@@ -40,19 +49,19 @@
         <div class="swiper-pagination"></div>
     </div>
 
-    <!-- Sección de Dudas Expandida -->
+    <!-- Sección de Dudas -->
     <div class="faq-section">
         <button class="accordion">¿Qué es Riman?</button>
-        <div class="panel"><p>Riman es una marca líder en belleza coreana con ciencia patentada. ¿Lista para probar resultados reales? ¡Haz clic en <b>Ver Tienda</b>!</p></div>
+        <div class="panel"><p>Riman es una marca líder en belleza coreana con ciencia patentada. ¡Haz clic en <b>Ver Tienda</b> para probar resultados reales!</p></div>
 
         <button class="accordion">¿Necesito experiencia?</button>
-        <div class="panel"><p>No. En nuestra academia te entregamos el sistema y mentoría para aprender desde cero. ¿Quieres empezar? Haz clic en <b>¡Quiero ser Planner!</b></p></div>
+        <div class="panel"><p>No. En nuestra academia te brindamos el sistema y la mentoría para aprender desde cero. ¿Quieres empezar? Haz clic en <b>¡Quiero ser Planner!</b></p></div>
 
         <button class="accordion">¿Cómo genero ingresos?</button>
-        <div class="panel"><p>Mediante la recomendación de productos de alta gama y la formación de tu propia red. ¿Dudas? ¡Haz clic en <b>WhatsApp</b>!</p></div>
+        <div class="panel"><p>Mediante la recomendación de productos y la formación de tu propia red. ¿Dudas? ¡Haz clic en <b>WhatsApp</b>!</p></div>
     </div>
 
-    <!-- Grid simplificado -->
+    <!-- Grid de Botones -->
     <div class="button-grid">
         <a href="https://mall.riman.com/ais21/products" class="btn-action btn-gold">🛍️ Ver Tienda</a>
         <a href="https://wa.me/56945491173" class="btn-action btn-green">💬 WhatsApp</a>
@@ -62,12 +71,14 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
+    // Inicialización del Carrusel con Autoplay
     new Swiper('.swiper', {
         loop: true,
         autoplay: { delay: 3000, disableOnInteraction: false },
         pagination: { el: '.swiper-pagination' }
     });
 
+    // Lógica de Acordeones
     var acc = document.getElementsByClassName("accordion");
     for (var i = 0; i < acc.length; i++) {
         acc[i].addEventListener("click", function() {
