@@ -6,24 +6,26 @@
     <title>Funnel Riman Academy</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
-        body { margin: 0; font-family: sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
+        body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
         .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
-        .header { background: #0f172a; color: white; padding: 25px; text-align: center; }
-        .header h1 { margin: 0; font-size: 24px; font-weight: bold; }
         
-        /* Carrusel Principal */
+        /* Encabezado Estilo Riman */
+        .header { background: #0f172a; color: #ffffff; padding: 30px 20px; text-align: center; border-bottom: 4px solid #d4af37; }
+        .header h1 { margin: 0; font-size: 28px; font-weight: 300; letter-spacing: 1px; text-transform: uppercase; }
+        .header p { margin: 5px 0 0 0; font-size: 14px; color: #d4af37; letter-spacing: 2px; }
+        
         .swiper { width: 100%; height: 300px; background: #ffffff; padding: 10px; box-sizing: border-box; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
         
-        /* Carrusel de Testimonios: altura fija y márgenes para no solaparse */
         .test-swiper { height: 350px !important; background: #f8fafc; margin-top: 30px; border-top: 1px solid #e2e8f0; }
         .test-swiper .swiper-slide img { padding: 20px; box-sizing: border-box; object-fit: contain; }
         
         .section-title { padding: 30px 15px 10px 15px; font-weight: bold; color: #1e293b; font-size: 18px; }
         
         .faq-section { padding: 15px; }
-        .accordion { background: #334155; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; }
-        .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; border-left: 3px solid #334155; margin-bottom: 8px; }
+        .accordion { background: #334155; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; transition: 0.4s; }
+        .accordion:hover { background: #475569; }
+        .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; border-left: 3px solid #334155; margin-bottom: 8px; }
         
         .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
         .btn-action { background: #334155; color: white; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; }
@@ -37,9 +39,9 @@
 <div class="chat-container">
     <div class="header">
         <h1 id="nombre-visual">Cargando...</h1>
+        <p>RIMAN PLANNER</p>
     </div>
     
-    <!-- Carrusel Principal -->
     <div class="swiper main-swiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide"><img src="" id="f1"></div>
@@ -51,7 +53,6 @@
         <div class="swiper-pagination"></div>
     </div>
 
-    <!-- Carrusel de Testimonios -->
     <div class="section-title">Resultados Reales</div>
     <div class="swiper test-swiper">
         <div class="swiper-wrapper">
@@ -67,6 +68,12 @@
     <div class="faq-section">
         <button class="accordion">¿Qué es Riman?</button>
         <div class="panel"><p>Riman es la marca #1 de belleza coreana con ciencia patentada.</p></div>
+
+        <button class="accordion">¿Cómo genero ingresos?</button>
+        <div class="panel"><p>Puedes generar ingresos recomendando nuestros productos y formando tu propio equipo de Planners.</p></div>
+
+        <button class="accordion">¿Es difícil empezar?</button>
+        <div class="panel"><p>¡Para nada! Contamos con toda la formación necesaria dentro de Riman Academy para que empieces desde cero.</p></div>
     </div>
 
     <div class="button-grid">
@@ -78,7 +85,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    // Inicializar carruseles de forma independiente
     new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
     new Swiper('.test-swiper', { loop: true, pagination: { el: '.swiper-pagination' } });
 
@@ -112,6 +118,7 @@
 
     document.querySelectorAll('.accordion').forEach(acc => {
         acc.addEventListener('click', function() {
+            this.classList.toggle("active");
             var panel = this.nextElementSibling;
             panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
         });
