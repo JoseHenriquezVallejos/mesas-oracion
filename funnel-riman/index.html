@@ -10,21 +10,22 @@
         .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
         .header { background: #0f172a; color: white; padding: 20px; text-align: center; }
         .header h1 { margin: 0; font-size: 24px; font-weight: bold; }
+        
+        /* Carruseles */
         .swiper { width: 100%; height: 250px; background: #ffffff; padding: 10px; box-sizing: border-box; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
+        
         .faq-section { padding: 15px; }
         .accordion { background: #334155; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; }
         .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; border-left: 3px solid #334155; margin-bottom: 8px; }
+        
         .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
         .btn-action { background: #334155; color: white; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; }
         .btn-gold { background: #d4af37; }
         .btn-green { background: #0fb396; }
         .btn-diamond { background: #2563eb; grid-column: span 2; font-size: 16px; padding: 12px; }
         
-        /* Ajuste de testimonios */
-        .testimonio-section { padding: 15px; }
-        .testimonio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
-        .testimonio-grid img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; }
+        .section-title { padding: 15px 15px 0 15px; font-weight: bold; color: #1e293b; }
     </style>
 </head>
 <body>
@@ -34,7 +35,8 @@
         <h1 id="nombre-visual">Cargando...</h1>
     </div>
     
-    <div class="swiper">
+    <!-- Carrusel Principal -->
+    <div class="swiper main-swiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide"><img src="" id="f1"></div>
             <div class="swiper-slide"><img src="" id="f2"></div>
@@ -45,15 +47,17 @@
         <div class="swiper-pagination"></div>
     </div>
 
-    <div class="testimonio-section">
-        <h3>Resultados Reales</h3>
-        <div class="testimonio-grid">
-            <img src="" id="t1">
-            <img src="" id="t2">
-            <img src="" id="t3">
-            <img src="" id="t4">
-            <img src="" id="t5">
+    <!-- Carrusel de Testimonios -->
+    <div class="section-title">Resultados Reales</div>
+    <div class="swiper test-swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="" id="t1"></div>
+            <div class="swiper-slide"><img src="" id="t2"></div>
+            <div class="swiper-slide"><img src="" id="t3"></div>
+            <div class="swiper-slide"><img src="" id="t4"></div>
+            <div class="swiper-slide"><img src="" id="t5"></div>
         </div>
+        <div class="swiper-pagination"></div>
     </div>
 
     <div class="faq-section">
@@ -70,7 +74,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    const swiper = new Swiper('.swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
+    // Inicializar ambos carruseles
+    new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
+    new Swiper('.test-swiper', { loop: true, pagination: { el: '.swiper-pagination' } });
+
     const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSU-bpcGNEsdx8LCiX7kkz4hVmn1AY0MoqjiXA4saZ9QYdKhCuzeN5qramsCIvYIpjMrM5nmaSvxg8V/pub?gid=0&single=true&output=csv';
 
     async function init() {
