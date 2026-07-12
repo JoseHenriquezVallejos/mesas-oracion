@@ -10,17 +10,17 @@
         .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
         .header { background: #0f172a; color: white; padding: 15px; text-align: center; }
         
-        /* Ajuste: padding para crear el marco y contain para no cortar la foto */
+        /* Imagen enmarcada */
         .swiper { width: 100%; height: 200px; background: #ffffff; padding: 10px; box-sizing: border-box; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
         
+        /* Botones ajustados */
         .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
         .btn-action { background: #334155; color: white; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; }
         .btn-gold { background: #d4af37; }
         .btn-green { background: #0fb396; }
+        .btn-info { background: #64748b; } /* Color nuevo para el botón informativo */
         .btn-diamond { background: #2563eb; grid-column: span 2; font-size: 16px; padding: 12px; }
-        
-        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
     </style>
 </head>
 <body>
@@ -40,6 +40,7 @@
     </div>
 
     <div class="button-grid">
+        <a href="https://www.rimanworld.com/global/" class="btn-action btn-info" target="_blank">📖 ¿Qué es Riman?</a>
         <a href="https://wa.me/56945491173?text=Hola,%20quiero%20info%20de%20la%20plataforma" class="btn-action">🚀 Plataforma</a>
         <a href="https://wa.me/56945491173?text=Hola,%20quiero%20info%20del%20negocio" class="btn-action">📈 Negocio Global</a>
         <a href="https://wa.me/56945491173?text=Hola,%20quiero%20info%20de%20conversión" class="btn-action">💼 Conversión</a>
@@ -49,10 +50,6 @@
         <a href="https://mall.riman.com/ais21/products" class="btn-action btn-diamond">¡Quiero ser Planner! 💎</a>
     </div>
 </div>
-
-<a href="https://wa.me/56945491173" class="whatsapp-float" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="60" alt="WhatsApp">
-</a>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
