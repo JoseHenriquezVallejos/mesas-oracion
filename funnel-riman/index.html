@@ -66,7 +66,7 @@
     const swiper = new Swiper('.swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
 
     // Lógica de carga de datos desde Google Sheets
-    const SHEET_URL = 'TU_LINK_DE_PUBLICACION_CSV_AQUI'; 
+    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSU-bpcGNEsdx8LCiX7kkz4hVmn1AY0MoqjiXA4saZ9QYdKhCuzeN5qramsCIvYIpjMrM5nmaSvxg8V/pub?gid=0&single=true&output=csv'; 
 
     async function init() {
         const params = new URLSearchParams(window.location.search);
