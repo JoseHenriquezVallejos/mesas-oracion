@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funnel Riman - Atención</title>
+    <title>Funnel Riman Academy</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
         body { margin: 0; font-family: sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
@@ -13,12 +13,16 @@
         .swiper { width: 100%; height: 200px; background: #ffffff; padding: 10px; box-sizing: border-box; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
         
-        /* Estilo de los Acordeones (Respuestas dentro del chat) */
+        /* Acordeones */
         .faq-section { padding: 15px; }
-        .accordion { background: #334155; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; outline: none; border-radius: 8px; margin-bottom: 10px; font-weight: bold; }
-        .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; border-left: 3px solid #334155; }
+        .accordion { background: #334155; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; }
+        .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; border-left: 3px solid #334155; margin-bottom: 8px; }
         
-        .btn-action { display: block; background: #0fb396; color: white; padding: 15px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: bold; margin: 15px; }
+        /* Botones */
+        .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
+        .btn-action { background: #334155; color: white; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; }
+        .btn-gold { background: #d4af37; }
+        .btn-diamond { background: #2563eb; grid-column: span 2; font-size: 16px; padding: 12px; }
     </style>
 </head>
 <body>
@@ -30,38 +34,45 @@
         <div class="swiper-wrapper">
             <div class="swiper-slide"><img src="1.jpg" alt="Imagen 1"></div>
             <div class="swiper-slide"><img src="2.jpg" alt="Imagen 2"></div>
+            <div class="swiper-slide"><img src="3.jpg" alt="Imagen 3"></div>
+            <div class="swiper-slide"><img src="4.jpg" alt="Imagen 4"></div>
+            <div class="swiper-slide"><img src="5.jpg" alt="Imagen 5"></div>
         </div>
         <div class="swiper-pagination"></div>
     </div>
 
     <div class="faq-section">
-        <button class="accordion">¿Qué es Riman y a qué se dedica?</button>
-        <div class="panel">
-            <p>Riman es una marca líder en belleza y bienestar con ciencia coreana. Nos dedicamos a la nutrición de la piel a nivel celular con ingredientes patentados.</p>
-        </div>
+        <button class="accordion">¿Qué es Riman?</button>
+        <div class="panel"><p>Riman es una marca coreana de belleza y bienestar basada en ciencia de vanguardia para resultados visibles.</p></div>
 
-        <button class="accordion">¿Necesito experiencia para empezar?</button>
-        <div class="panel">
-            <p>¡No! En nuestra academia te entregamos el sistema, las herramientas y la mentoría necesaria para que aprendas desde cero.</p>
-        </div>
+        <button class="accordion">¿Necesito experiencia?</button>
+        <div class="panel"><p>No, nuestra academia te brinda todo el sistema y capacitación necesaria para iniciar desde cero.</p></div>
     </div>
 
-    <a href="https://wa.me/56945491173" class="btn-action">💬 Hablar con un Asesor</a>
+    <div class="button-grid">
+        <a href="https://wa.me/56945491173?text=Hola,%20info%20plataforma" class="btn-action">🚀 Plataforma</a>
+        <a href="https://wa.me/56945491173?text=Hola,%20info%20negocio" class="btn-action">📈 Negocio Global</a>
+        <a href="https://mall.riman.com/ais21/products" class="btn-action btn-gold">🛍️ Ver Tienda</a>
+        <a href="https://wa.me/56945491173" class="btn-action">💬 WhatsApp</a>
+        <a href="https://mall.riman.com/ais21/products" class="btn-action btn-diamond">¡Quiero ser Planner! 💎</a>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    // Inicializar Swiper
-    new Swiper('.swiper', { loop: true, pagination: { el: '.swiper-pagination' } });
+    // Carrusel Automático
+    new Swiper('.swiper', {
+        loop: true,
+        autoplay: { delay: 3000, disableOnInteraction: false },
+        pagination: { el: '.swiper-pagination' }
+    });
 
-    // Lógica de los Acordeones
+    // Lógica de Acordeones
     var acc = document.getElementsByClassName("accordion");
     for (var i = 0; i < acc.length; i++) {
         acc[i].addEventListener("click", function() {
-            this.classList.toggle("active");
             var panel = this.nextElementSibling;
-            if (panel.style.maxHeight) { panel.style.maxHeight = null; } 
-            else { panel.style.maxHeight = panel.scrollHeight + "px"; }
+            panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
         });
     }
 </script>
