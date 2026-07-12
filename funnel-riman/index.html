@@ -9,7 +9,6 @@
         body { margin: 0; font-family: sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
         .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
         
-        /* Encabezado con Logo */
         .header { background: #0f172a; color: white; padding: 15px; display: flex; align-items: center; gap: 15px; }
         .header img { height: 45px; width: 45px; border-radius: 5px; object-fit: cover; }
         .header h1 { margin: 0; font-size: 20px; }
@@ -31,61 +30,75 @@
 <body>
 
 <div class="chat-container">
-    <!-- Encabezado con Logo -->
     <div class="header">
         <img src="logo.jpg" alt="Logo Riman">
-        <h1>Riman Academy</h1>
+        <h1 id="nombre-visual">Riman Academy</h1>
     </div>
     
-    <!-- Carrusel Automático -->
     <div class="swiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="1.jpg" alt="Imagen 1"></div>
-            <div class="swiper-slide"><img src="2.jpg" alt="Imagen 2"></div>
-            <div class="swiper-slide"><img src="3.jpg" alt="Imagen 3"></div>
-            <div class="swiper-slide"><img src="4.jpg" alt="Imagen 4"></div>
-            <div class="swiper-slide"><img src="5.jpg" alt="Imagen 5"></div>
+            <div class="swiper-slide"><img src="1.jpg" alt="Imagen 1" id="f1"></div>
+            <div class="swiper-slide"><img src="2.jpg" alt="Imagen 2" id="f2"></div>
+            <div class="swiper-slide"><img src="3.jpg" alt="Imagen 3" id="f3"></div>
+            <div class="swiper-slide"><img src="4.jpg" alt="Imagen 4" id="f4"></div>
+            <div class="swiper-slide"><img src="5.jpg" alt="Imagen 5" id="f5"></div>
         </div>
         <div class="swiper-pagination"></div>
     </div>
 
-    <!-- Sección de Dudas -->
     <div class="faq-section">
         <button class="accordion">¿Qué es Riman?</button>
-        <div class="panel"><p>Riman es una marca líder en belleza coreana con ciencia patentada. ¡Haz clic en <b>Ver Tienda</b> para probar resultados reales!</p></div>
-
-        <button class="accordion">¿Necesito experiencia?</button>
-        <div class="panel"><p>No. En nuestra academia te brindamos el sistema y la mentoría para aprender desde cero. ¿Quieres empezar? Haz clic en <b>¡Quiero ser Planner!</b></p></div>
-
+        <div class="panel"><p>Riman es una marca líder en belleza coreana con ciencia patentada.</p></div>
         <button class="accordion">¿Cómo genero ingresos?</button>
-        <div class="panel"><p>Mediante la recomendación de productos y la formación de tu propia red. ¿Dudas? ¡Haz clic en <b>WhatsApp</b>!</p></div>
+        <div class="panel"><p>Mediante la recomendación de productos. ¡Haz clic en WhatsApp!</p></div>
     </div>
 
-    <!-- Grid de Botones -->
     <div class="button-grid">
-        <a href="https://mall.riman.com/ais21/products" class="btn-action btn-gold">🛍️ Ver Tienda</a>
-        <a href="https://wa.me/56945491173" class="btn-action btn-green">💬 WhatsApp</a>
-        <a href="https://mall.riman.com/ais21/products" class="btn-action btn-diamond">¡Quiero ser Planner! 💎</a>
+        <a id="btn-tienda" href="#" class="btn-action btn-gold">🛍️ Ver Tienda</a>
+        <a id="btn-wa" href="#" class="btn-action btn-green">💬 WhatsApp</a>
+        <a id="btn-planner" href="#" class="btn-action btn-diamond">¡Quiero ser Planner! 💎</a>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    // Inicialización del Carrusel con Autoplay
-    new Swiper('.swiper', {
-        loop: true,
-        autoplay: { delay: 3000, disableOnInteraction: false },
-        pagination: { el: '.swiper-pagination' }
-    });
+    // Inicialización del Carrusel
+    const swiper = new Swiper('.swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
+
+    // Lógica de carga de datos desde Google Sheets
+    const SHEET_URL = 'TU_LINK_DE_PUBLICACION_CSV_AQUI'; 
+
+    async function init() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        if (!id) return;
+
+        const res = await fetch(SHEET_URL);
+        const data = await res.text();
+        const rows = data.split('\n').map(r => r.split(','));
+        const user = rows.find(r => r[0].trim() === id.trim());
+
+        if (user) {
+            document.getElementById('nombre-visual').innerText = user[1];
+            document.getElementById('btn-wa').href = 'https://wa.me/' + user[2];
+            document.getElementById('btn-tienda').href = user[3];
+            document.getElementById('btn-planner').href = user[3];
+            
+            // Cargar imágenes (Columnas E a I)
+            for(let i=0; i<5; i++) {
+                document.getElementById('f' + (i+1)).src = user[4+i];
+            }
+        }
+    }
+    init();
 
     // Lógica de Acordeones
-    var acc = document.getElementsByClassName("accordion");
-    for (var i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function() {
+    document.querySelectorAll('.accordion').forEach(acc => {
+        acc.addEventListener('click', function() {
             var panel = this.nextElementSibling;
             panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
         });
-    }
+    });
 </script>
 </body>
 </html>
