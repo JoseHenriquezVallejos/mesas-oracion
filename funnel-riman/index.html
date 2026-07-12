@@ -21,6 +21,9 @@
         .btn-gold { background: #d4af37; }
         .btn-green { background: #0fb396; }
         .btn-diamond { background: #2563eb; grid-column: span 2; font-size: 16px; padding: 12px; }
+        .testimonio-section { padding: 15px; }
+        .testimonio-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+        .testimonio-grid img { width: 100%; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -42,11 +45,21 @@
         <div class="swiper-pagination"></div>
     </div>
 
+    <!-- Sección de Testimonios -->
+    <div class="testimonio-section">
+        <h3>Resultados Reales</h3>
+        <div class="testimonio-grid">
+            <img src="" id="t1" alt="Testimonio 1">
+            <img src="" id="t2" alt="Testimonio 2">
+            <img src="" id="t3" alt="Testimonio 3">
+            <img src="" id="t4" alt="Testimonio 4">
+            <img src="" id="t5" alt="Testimonio 5">
+        </div>
+    </div>
+
     <div class="faq-section">
         <button class="accordion">¿Qué es Riman?</button>
         <div class="panel"><p>Riman es una marca líder en belleza coreana.</p></div>
-        <button class="accordion">¿Cómo genero ingresos?</button>
-        <div class="panel"><p>Mediante la recomendación de productos y formación de red.</p></div>
     </div>
 
     <div class="button-grid">
@@ -70,8 +83,6 @@
             const res = await fetch(SHEET_URL);
             const data = await res.text();
             const lines = data.split('\n');
-            
-            // Buscamos la fila cuyo primer valor sea el ID
             const userRow = lines.find(line => line.split(',')[0].trim() === id.trim());
 
             if (userRow) {
@@ -81,22 +92,20 @@
                 document.getElementById('btn-tienda').href = cols[3].trim();
                 document.getElementById('btn-planner').href = cols[3].trim();
                 
-                // Actualizar imágenes f1 a f5 (índices 4 a 8)
+                // Imágenes f1-f5 (índices 4-8)
                 for(let i=0; i<5; i++) {
                     const img = document.getElementById('f' + (i+1));
-                    if(img && cols[4+i]) img.src = cols[4+i].trim();
+                    if(img) img.src = cols[4+i].trim();
+                }
+                // Testimonios t1-t5 (índices 9-13)
+                for(let i=0; i<5; i++) {
+                    const t = document.getElementById('t' + (i+1));
+                    if(t) t.src = cols[9+i].trim();
                 }
             }
-        } catch (e) { console.error("Error al cargar:", e); }
+        } catch (e) { console.error("Error:", e); }
     }
     init();
-
-    document.querySelectorAll('.accordion').forEach(acc => {
-        acc.addEventListener('click', function() {
-            var panel = this.nextElementSibling;
-            panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
-        });
-    });
 </script>
 </body>
 </html>
