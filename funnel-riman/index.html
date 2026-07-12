@@ -8,18 +8,14 @@
     <style>
         body { margin: 0; font-family: sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
         .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
-        
         .header { background: #0f172a; color: white; padding: 15px; display: flex; align-items: center; gap: 15px; }
         .header img { height: 45px; width: 45px; border-radius: 5px; object-fit: cover; }
         .header h1 { margin: 0; font-size: 20px; }
-        
         .swiper { width: 100%; height: 200px; background: #ffffff; padding: 10px; box-sizing: border-box; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
-        
         .faq-section { padding: 15px; }
         .accordion { background: #334155; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; }
         .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; border-left: 3px solid #334155; margin-bottom: 8px; }
-        
         .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
         .btn-action { background: #334155; color: white; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; }
         .btn-gold { background: #d4af37; }
@@ -32,25 +28,25 @@
 <div class="chat-container">
     <div class="header">
         <img src="logo.jpg" alt="Logo Riman">
-        <h1 id="nombre-visual">Riman Academy</h1>
+        <h1 id="nombre-visual">Cargando...</h1>
     </div>
     
     <div class="swiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="1.jpg" alt="Imagen 1" id="f1"></div>
-            <div class="swiper-slide"><img src="2.jpg" alt="Imagen 2" id="f2"></div>
-            <div class="swiper-slide"><img src="3.jpg" alt="Imagen 3" id="f3"></div>
-            <div class="swiper-slide"><img src="4.jpg" alt="Imagen 4" id="f4"></div>
-            <div class="swiper-slide"><img src="5.jpg" alt="Imagen 5" id="f5"></div>
+            <div class="swiper-slide"><img src="" alt="F1" id="f1"></div>
+            <div class="swiper-slide"><img src="" alt="F2" id="f2"></div>
+            <div class="swiper-slide"><img src="" alt="F3" id="f3"></div>
+            <div class="swiper-slide"><img src="" alt="F4" id="f4"></div>
+            <div class="swiper-slide"><img src="" alt="F5" id="f5"></div>
         </div>
         <div class="swiper-pagination"></div>
     </div>
 
     <div class="faq-section">
         <button class="accordion">¿Qué es Riman?</button>
-        <div class="panel"><p>Riman es una marca líder en belleza coreana con ciencia patentada.</p></div>
+        <div class="panel"><p>Riman es una marca líder en belleza coreana.</p></div>
         <button class="accordion">¿Cómo genero ingresos?</button>
-        <div class="panel"><p>Mediante la recomendación de productos. ¡Haz clic en WhatsApp!</p></div>
+        <div class="panel"><p>Mediante la recomendación de productos y formación de red.</p></div>
     </div>
 
     <div class="button-grid">
@@ -62,37 +58,39 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    // Inicialización del Carrusel
     const swiper = new Swiper('.swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
-
-    // Lógica de carga de datos desde Google Sheets
-    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSU-bpcGNEsdx8LCiX7kkz4hVmn1AY0MoqjiXA4saZ9QYdKhCuzeN5qramsCIvYIpjMrM5nmaSvxg8V/pub?gid=0&single=true&output=csv'; 
+    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSU-bpcGNEsdx8LCiX7kkz4hVmn1AY0MoqjiXA4saZ9QYdKhCuzeN5qramsCIvYIpjMrM5nmaSvxg8V/pub?gid=0&single=true&output=csv';
 
     async function init() {
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
         if (!id) return;
 
-        const res = await fetch(SHEET_URL);
-        const data = await res.text();
-        const rows = data.split('\n').map(r => r.split(','));
-        const user = rows.find(r => r[0].trim() === id.trim());
-
-        if (user) {
-            document.getElementById('nombre-visual').innerText = user[1];
-            document.getElementById('btn-wa').href = 'https://wa.me/' + user[2];
-            document.getElementById('btn-tienda').href = user[3];
-            document.getElementById('btn-planner').href = user[3];
+        try {
+            const res = await fetch(SHEET_URL);
+            const data = await res.text();
+            const lines = data.split('\n');
             
-            // Cargar imágenes (Columnas E a I)
-            for(let i=0; i<5; i++) {
-                document.getElementById('f' + (i+1)).src = user[4+i];
+            // Buscamos la fila cuyo primer valor sea el ID
+            const userRow = lines.find(line => line.split(',')[0].trim() === id.trim());
+
+            if (userRow) {
+                const cols = userRow.split(',');
+                document.getElementById('nombre-visual').innerText = cols[1];
+                document.getElementById('btn-wa').href = 'https://wa.me/' + cols[2].trim();
+                document.getElementById('btn-tienda').href = cols[3].trim();
+                document.getElementById('btn-planner').href = cols[3].trim();
+                
+                // Actualizar imágenes f1 a f5 (índices 4 a 8)
+                for(let i=0; i<5; i++) {
+                    const img = document.getElementById('f' + (i+1));
+                    if(img && cols[4+i]) img.src = cols[4+i].trim();
+                }
             }
-        }
+        } catch (e) { console.error("Error al cargar:", e); }
     }
     init();
 
-    // Lógica de Acordeones
     document.querySelectorAll('.accordion').forEach(acc => {
         acc.addEventListener('click', function() {
             var panel = this.nextElementSibling;
