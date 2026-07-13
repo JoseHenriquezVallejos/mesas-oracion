@@ -9,7 +9,6 @@
         body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
         .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
         
-        /* Encabezado Estilo Riman */
         .header { background: #0f172a; color: #ffffff; padding: 30px 20px; text-align: center; border-bottom: 4px solid #d4af37; }
         .header h1 { margin: 0; font-size: 28px; font-weight: 300; letter-spacing: 1px; text-transform: uppercase; }
         .header p { margin: 5px 0 0 0; font-size: 14px; color: #d4af37; letter-spacing: 2px; }
@@ -65,16 +64,8 @@
         <div class="swiper-pagination"></div>
     </div>
 
-    <div class="faq-section">
-        <button class="accordion">¿Qué es Riman?</button>
-        <div class="panel"><p>Riman es la marca #1 de belleza coreana con ciencia patentada.</p></div>
-
-        <button class="accordion">¿Cómo genero ingresos?</button>
-        <div class="panel"><p>Puedes generar ingresos recomendando nuestros productos y formando tu propio equipo de Planners.</p></div>
-
-        <button class="accordion">¿Es difícil empezar?</button>
-        <div class="panel"><p>¡Para nada! Contamos con toda la formación necesaria dentro de Riman Academy para que empieces desde cero.</p></div>
-    </div>
+    <div class="faq-section" id="faq-container">
+        </div>
 
     <div class="button-grid">
         <a id="btn-tienda" href="#" class="btn-action btn-gold">🛍️ Ver Tienda</a>
@@ -87,6 +78,21 @@
 <script>
     new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
     new Swiper('.test-swiper', { loop: true, pagination: { el: '.swiper-pagination' } });
+
+    const infoRiman = [
+        { t: "✨ ¿Qué es Riman?", c: "Riman es la marca #1 de belleza coreana que fusiona ingredientes botánicos con ciencia patentada para transformar tu piel desde el nivel celular." },
+        { t: "🔬 Tecnología de Absorción", c: "Nuestros productos utilizan sistemas avanzados de entrega para que los activos penetren profundamente, logrando resultados reales y duraderos." },
+        { t: "🌿 Líneas de Cuidado", c: "Contamos con: Incellderm (facial), Botalab (capilar y corporal) y Lifening (nutrición), cubriendo todas tus necesidades de belleza." },
+        { t: "💧 Ingredientes Exclusivos", c: "Utilizamos activos únicos de la isla de Jeju y complejos botánicos ricos en antioxidantes que protegen tu piel del envejecimiento visible." },
+        { t: "🤝 Nuestra Comunidad", c: "Como tu Planner, te guiaré paso a paso para que aproveches al máximo la tecnología Riman y transformes tu rutina de cuidado personal." }
+    ];
+
+    const faqContainer = document.getElementById('faq-container');
+    infoRiman.forEach(item => {
+        faqContainer.innerHTML += `
+            <button class="accordion">${item.t}</button>
+            <div class="panel"><p>${item.c}</p></div>`;
+    });
 
     const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSU-bpcGNEsdx8LCiX7kkz4hVmn1AY0MoqjiXA4saZ9QYdKhCuzeN5qramsCIvYIpjMrM5nmaSvxg8V/pub?gid=0&single=true&output=csv';
 
