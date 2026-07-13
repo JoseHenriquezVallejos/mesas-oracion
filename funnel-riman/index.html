@@ -22,43 +22,15 @@
         .section-title { padding: 30px 15px 10px 15px; font-weight: bold; color: #1e293b; font-size: 18px; }
         
         .faq-section { padding: 15px; }
-        
-        .accordion { 
-            background: #0f172a; 
-            color: #ffffff; 
-            cursor: pointer; 
-            padding: 18px; 
-            width: 100%; 
-            border: none; 
-            text-align: left; 
-            border-radius: 8px; 
-            margin-bottom: 10px; 
-            font-weight: 700; 
-            font-size: 17px; 
-            transition: 0.4s; 
-        }
-        .accordion:hover { background: #1e293b; }
-        
-        .panel { 
-            padding: 15px 18px; /* Padding ajustado para mejor equilibrio */
-            background-color: #f8fafc; 
-            max-height: 0; 
-            overflow: hidden; 
-            transition: max-height 0.3s ease-out; 
-            border-left: 4px solid #0f172a; 
-            margin-bottom: 10px;
-            font-size: 17px; 
-            color: #0f172a; 
-            line-height: 1.6;
-            font-weight: 500;
-            text-align: justify; /* AQUÍ ESTÁ EL AJUSTE PARA CUADRAR EL TEXTO */
-        }
+        .accordion { background: #334155; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; transition: 0.4s; }
+        .accordion:hover { background: #475569; }
+        .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; border-left: 3px solid #334155; margin-bottom: 8px; }
         
         .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
-        .btn-action { background: #334155; color: white; padding: 15px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 15px; }
+        .btn-action { background: #334155; color: white; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; }
         .btn-gold { background: #d4af37; }
         .btn-green { background: #0fb396; }
-        .btn-diamond { background: #2563eb; grid-column: span 2; font-size: 17px; padding: 15px; }
+        .btn-diamond { background: #2563eb; grid-column: span 2; font-size: 16px; padding: 12px; }
     </style>
 </head>
 <body>
@@ -92,7 +64,16 @@
         <div class="swiper-pagination"></div>
     </div>
 
-    <div class="faq-section" id="faq-container"></div>
+    <div class="faq-section">
+        <button class="accordion">¿Qué es Riman?</button>
+        <div class="panel"><p>Riman es la marca #1 de belleza coreana con ciencia patentada.</p></div>
+
+        <button class="accordion">¿Cómo genero ingresos?</button>
+        <div class="panel"><p>Puedes generar ingresos recomendando nuestros productos y formando tu propio equipo de Planners.</p></div>
+
+        <button class="accordion">¿Es difícil empezar?</button>
+        <div class="panel"><p>¡Para nada! Contamos con toda la formación necesaria dentro de Riman Academy para que empieces desde cero.</p></div>
+    </div>
 
     <div class="button-grid">
         <a id="btn-tienda" href="#" class="btn-action btn-gold">🛍️ Ver Tienda</a>
@@ -105,21 +86,6 @@
 <script>
     new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
     new Swiper('.test-swiper', { loop: true, pagination: { el: '.swiper-pagination' } });
-
-    const infoRiman = [
-        { t: "✨ ¿Qué es Riman?", c: "Riman es la marca #1 de belleza coreana que fusiona ingredientes botánicos con ciencia patentada para transformar tu piel desde el nivel celular." },
-        { t: "🔬 Tecnología de Absorción", c: "Nuestros productos utilizan sistemas avanzados de entrega para que los activos penetren profundamente, logrando resultados reales y duraderos." },
-        { t: "🌿 Líneas de Cuidado", c: "Contamos con: Incellderm (facial), Botalab (capilar y corporal) y Lifening (nutrición), cubriendo todas tus necesidades de belleza." },
-        { t: "💧 Ingredientes Exclusivos", c: "Utilizamos activos únicos de la isla de Jeju y complejos botánicos ricos en antioxidantes que protegen tu piel del envejecimiento visible." },
-        { t: "🤝 Nuestra Comunidad", c: "Como tu Planner, te guiaré paso a paso para que aproveches al máximo la tecnología Riman y transformes tu rutina de cuidado personal." }
-    ];
-
-    const faqContainer = document.getElementById('faq-container');
-    infoRiman.forEach(item => {
-        faqContainer.innerHTML += `
-            <button class="accordion">${item.t}</button>
-            <div class="panel">${item.c}</div>`;
-    });
 
     const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSU-bpcGNEsdx8LCiX7kkz4hVmn1AY0MoqjiXA4saZ9QYdKhCuzeN5qramsCIvYIpjMrM5nmaSvxg8V/pub?gid=0&single=true&output=csv';
 
