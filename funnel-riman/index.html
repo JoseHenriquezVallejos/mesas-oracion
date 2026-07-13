@@ -22,15 +22,42 @@
         .section-title { padding: 30px 15px 10px 15px; font-weight: bold; color: #1e293b; font-size: 18px; }
         
         .faq-section { padding: 15px; }
-        .accordion { background: #334155; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; transition: 0.4s; }
-        .accordion:hover { background: #475569; }
-        .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; border-left: 3px solid #334155; margin-bottom: 8px; }
+        
+        /* Estilos de accesibilidad mejorados */
+        .accordion { 
+            background: #0f172a; 
+            color: #ffffff; 
+            cursor: pointer; 
+            padding: 18px; 
+            width: 100%; 
+            border: none; 
+            text-align: left; 
+            border-radius: 8px; 
+            margin-bottom: 10px; 
+            font-weight: 700; 
+            font-size: 17px; 
+            transition: 0.4s; 
+        }
+        .accordion:hover { background: #1e293b; }
+        
+        .panel { 
+            padding: 0 18px; 
+            background-color: #f8fafc; 
+            max-height: 0; 
+            overflow: hidden; 
+            transition: max-height 0.3s ease-out; 
+            border-left: 4px solid #0f172a; 
+            margin-bottom: 10px;
+            font-size: 17px; 
+            color: #0f172a; 
+            line-height: 1.6;
+        }
         
         .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
-        .btn-action { background: #334155; color: white; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; }
+        .btn-action { background: #334155; color: white; padding: 15px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 15px; }
         .btn-gold { background: #d4af37; }
         .btn-green { background: #0fb396; }
-        .btn-diamond { background: #2563eb; grid-column: span 2; font-size: 16px; padding: 12px; }
+        .btn-diamond { background: #2563eb; grid-column: span 2; font-size: 17px; padding: 15px; }
     </style>
 </head>
 <body>
@@ -64,8 +91,7 @@
         <div class="swiper-pagination"></div>
     </div>
 
-    <div class="faq-section" id="faq-container">
-        </div>
+    <div class="faq-section" id="faq-container"></div>
 
     <div class="button-grid">
         <a id="btn-tienda" href="#" class="btn-action btn-gold">🛍️ Ver Tienda</a>
