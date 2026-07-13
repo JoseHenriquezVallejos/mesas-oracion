@@ -2,74 +2,77 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
-    <title>ProverbsAcademy - Mesa de Oración</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesa de Oración</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
-        :root { --header-bg: #0f172a; --page-bg: #f1f5f9; --btn-green: #0fb396; --prayer-gold: #d4af37; }
-        * { box-sizing: border-box; }
-        body { margin: 0; padding: 0; font-family: sans-serif; background-color: var(--page-bg); height: 100vh; display: flex; justify-content: center; }
-        .chat-container { width: 100%; max-width: 700px; background: white; height: 100%; display: flex; flex-direction: column; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
-        .header-premium { background-color: var(--header-bg); color: white; padding: 20px; text-align: center; }
-        .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
-        .btn-option { background: #f8fafc; border: 1px solid #cbd5e1; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: 600; text-align: center; text-decoration: none; color: #334155; }
-        .btn-option:hover { background: var(--btn-green); color: white; }
-        #chat-history { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
-        .msg { padding: 12px; border-radius: 10px; max-width: 90%; }
-        .bot-msg { background: #f8fafc; border: 1px solid #e2e8f0; align-self: flex-start; }
-        .user-msg { background: var(--btn-green); color: white; align-self: flex-end; }
+        body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
+        .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
+        
+        .header { background: #0f172a; color: #ffffff; padding: 30px 20px; text-align: center; border-bottom: 4px solid #d4af37; }
+        .header h1 { margin: 0; font-size: 28px; font-weight: 300; letter-spacing: 1px; text-transform: uppercase; }
+        .header p { margin: 5px 0 0 0; font-size: 14px; color: #d4af37; letter-spacing: 2px; }
+        
+        .swiper { width: 100%; height: 350px; background: #ffffff; padding: 10px; box-sizing: border-box; }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
+        
+        .btn-container { padding: 20px; text-align: center; }
+        .btn-wa { display: block; background: #25d366; color: white; padding: 15px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 18px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
 <div class="chat-container">
-    <div class="header-premium">
-        <h1 id="prod-name">ProverbsAcademy</h1>
-        <p>Sabiduría milenaria para tu vida diaria.</p>
+    <div class="header">
+        <h1 id="nombre-visual">Cargando...</h1>
+        <p>MESA DE ORACIÓN</p>
     </div>
-    <div class="button-grid" id="menu-oracion"></div>
-    <div id="chat-history"><div class="msg bot-msg">Bienvenido, selecciona una opción.</div></div>
+    
+    <div class="swiper main-swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="" id="f1"></div>
+            <div class="swiper-slide"><img src="" id="f2"></div>
+            <div class="swiper-slide"><img src="" id="f3"></div>
+            <div class="swiper-slide"><img src="" id="f4"></div>
+            <div class="swiper-slide"><img src="" id="f5"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="btn-container">
+        <a id="btn-wa" href="#" class="btn-wa">🙏 Enviar Petición de Oración</a>
+    </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    // 1. Obtener ID de la URL (Ejemplo: tu-web.com?id=iglesia01)
-    const urlParams = new URLSearchParams(window.location.search);
-    const idIglesia = urlParams.get('id') || 'iglesia01'; 
-    
-    // 2. Base de datos simulada (Aquí conectarás tu Planilla después)
-    const db = {
-        "iglesia01": { whatsapp: "56945491173" },
-        "iglesia02": { whatsapp: "56963128383" }
-    };
+    new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
 
-    const info = db[idIglesia] || { whatsapp: "56945491173" };
-    document.getElementById('prod-name').innerText = "Mesa de " + idIglesia;
+    // REEMPLAZA ESTA URL CON LA DE TU NUEVA PLANILLA
+    const SHEET_URL = 'TU_NUEVA_URL_DE_PUBLICACION_CSV_AQUI';
 
-    // 3. Crear botones
-    const opciones = ["❤️ Salud", "👨‍👩‍👧 Familia", "💼 Trabajo", "✝️ Fe y ánimo"];
-    const grid = document.getElementById('menu-oracion');
+    async function init() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        if (!id) return;
 
-    opciones.forEach(opcion => {
-        const btn = document.createElement('button');
-        btn.className = 'btn-option';
-        btn.innerText = opcion;
-        btn.onclick = () => enviarRespuesta(opcion);
-        grid.appendChild(btn);
-    });
+        try {
+            const res = await fetch(SHEET_URL);
+            const data = await res.text();
+            const rows = data.split('\n').map(r => r.split(','));
+            const user = rows.find(r => r[0] && r[0].trim() === id.trim());
 
-    // 4. Botón WhatsApp Dinámico
-    const linkWA = document.createElement('a');
-    linkWA.href = `https://wa.me/${info.whatsapp}`;
-    linkWA.target = "_blank";
-    linkWA.className = 'btn-option';
-    linkWA.innerText = "📤 Enviar petición";
-    grid.appendChild(linkWA);
-
-    function enviarRespuesta(opcion) {
-        const history = document.getElementById('chat-history');
-        history.innerHTML += `<div class="msg user-msg">${opcion}</div>`;
-        history.innerHTML += `<div class="msg bot-msg">Oramos por tu petición de ${opcion}.</div>`;
-        history.scrollTop = history.scrollHeight;
+            if (user) {
+                document.getElementById('nombre-visual').innerText = user[1].trim();
+                document.getElementById('btn-wa').href = 'https://wa.me/' + user[2].trim();
+                
+                for(let i=0; i<5; i++) {
+                    if(document.getElementById('f' + (i+1))) document.getElementById('f' + (i+1)).src = user[3+i].trim();
+                }
+            }
+        } catch (e) { console.error("Error al cargar datos:", e); }
     }
+    init();
 </script>
 </body>
 </html>
