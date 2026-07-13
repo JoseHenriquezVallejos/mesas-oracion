@@ -49,7 +49,12 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    const swiper = new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
+    // Inicializamos el Swiper sin configuración compleja primero
+    let mySwiper = new Swiper('.main-swiper', { 
+        loop: true, 
+        autoplay: { delay: 3000 }, 
+        pagination: { el: '.swiper-pagination' } 
+    });
 
     const oraciones = [
         { t: "❤️ Salud", id: "audio1" },
@@ -61,12 +66,8 @@
     ];
 
     const accContainer = document.getElementById('accordion-container');
-    
     function detenerAudios() {
-        document.querySelectorAll('audio').forEach(audio => {
-            audio.pause();
-            audio.currentTime = 0; 
-        });
+        document.querySelectorAll('audio').forEach(audio => { audio.pause(); audio.currentTime = 0; });
     }
 
     oraciones.forEach(item => {
@@ -79,7 +80,7 @@
             </div>`;
     });
 
-    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTGa4eqew0ZuG7AI1ZPZyo27jWSj9drWXH8JTvOxVqOtl5U-1YSa0ozV4gk5wk9nj6zvOjdnp8pKAms/pub?gid=0&single=true&output=csv';
+    const SHEET_URL = 'TU_URL_AQUÍ';
 
     async function init() {
         try {
@@ -92,24 +93,28 @@
                 document.getElementById('nombre-visual').innerText = user[1].trim();
                 document.getElementById('btn-wa').href = 'https://wa.me/' + user[2].trim();
 
-                // Cargar imágenes (índices 3 al 7)
+                // Cargar imágenes dinámicamente
                 const swiperWrapper = document.getElementById('swiper-content');
+                swiperWrapper.innerHTML = ''; 
                 for(let i=0; i<5; i++) {
-                    if(user[3+i]) {
+                    if(user[3+i] && user[3+i].trim() !== "") {
                         swiperWrapper.innerHTML += `<div class="swiper-slide"><img src="${user[3+i].trim()}"></div>`;
                     }
                 }
-                swiper.update();
+                
+                // IMPORTANTE: Actualizar el Swiper para que reconozca los nuevos slides
+                mySwiper.destroy();
+                mySwiper = new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
 
-                // Cargar audios (índices 8 al 13)
+                // Cargar audios
                 for(let i=0; i<6; i++) {
                     const audioLink = user[8 + i]?.trim();
-                    if(audioLink) {
+                    if(audioLink && audioLink !== "") {
                         document.getElementById(`audio${i+1}`).innerHTML = `<audio controls><source src="${audioLink}" type="audio/mpeg">Tu navegador no soporta audio.</audio>`;
                     }
                 }
             }
-        } catch (e) { console.error("Error:", e); }
+        } catch (e) { console.error("Error cargando datos:", e); }
     }
     init();
 </script>
