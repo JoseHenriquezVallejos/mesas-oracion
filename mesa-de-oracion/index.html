@@ -56,7 +56,6 @@
 <script>
     const swiper = new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
 
-    // Definición de las 6 oraciones
     const oraciones = [
         { t: "❤️ Salud", id: "audio1" },
         { t: "👪 Familia", id: "audio2" },
@@ -67,35 +66,48 @@
     ];
 
     const accContainer = document.getElementById('accordion-container');
+
+    // Función para detener todos los audios al abrir un nuevo acordeón
+    function detenerAudios() {
+        document.querySelectorAll('audio').forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0; 
+        });
+    }
+
     oraciones.forEach(item => {
         accContainer.innerHTML += `
             <div class="accordion-item">
-                <button class="accordion-header" onclick="this.nextElementSibling.style.display=(this.nextElementSibling.style.display==='block'?'none':'block')">${item.t}</button>
+                <button class="accordion-header" onclick="detenerAudios(); this.nextElementSibling.style.display=(this.nextElementSibling.style.display==='block'?'none':'block')">
+                    ${item.t}
+                </button>
                 <div class="accordion-content" id="${item.id}"></div>
             </div>`;
     });
 
-    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTGa4eqew0ZuG7AI1ZPZyo27jWSj9drWXH8JTvOxVqOtl5U-1YSa0ozV4gk5wk9nj6zvOjdnp8pKAms/pub?gid=0&single=true&output=csv';
+    const SHEET_URL = 'TU_URL_AQUÍ';
 
     async function init() {
-        const res = await fetch(SHEET_URL);
-        const data = await res.text();
-        const rows = data.split('\n').map(r => r.split(','));
-        const user = rows[1];
-        if (user) {
-            document.getElementById('nombre-visual').innerText = user[1].trim();
-            document.getElementById('btn-wa').href = 'https://wa.me/' + user[2].trim();
-            for(let i=0; i<5; i++) {
-                if(document.getElementById('f'+(i+1))) document.getElementById('f'+(i+1)).src = user[3+i].trim();
-            }
-            // Inyectar los 6 audios desde las columnas 8 a 13
-            for(let i=0; i<6; i++) {
-                const audioLink = user[8 + i]?.trim();
-                if(audioLink) {
-                    document.getElementById(`audio${i+1}`).innerHTML = `<audio controls><source src="${audioLink}" type="audio/mpeg">Tu navegador no soporta audio.</audio>`;
+        try {
+            const res = await fetch(SHEET_URL);
+            const data = await res.text();
+            const rows = data.split('\n').map(r => r.split(','));
+            const user = rows[1];
+            if (user) {
+                document.getElementById('nombre-visual').innerText = user[1].trim();
+                document.getElementById('btn-wa').href = 'https://wa.me/' + user[2].trim();
+                for(let i=0; i<5; i++) {
+                    if(document.getElementById('f'+(i+1))) document.getElementById('f'+(i+1)).src = user[3+i].trim();
+                }
+                // Inyectar los 6 audios desde las columnas 9 a 14 (índice 8 a 13)
+                for(let i=0; i<6; i++) {
+                    const audioLink = user[8 + i]?.trim();
+                    if(audioLink) {
+                        document.getElementById(`audio${i+1}`).innerHTML = `<audio controls><source src="${audioLink}" type="audio/mpeg">Tu navegador no soporta audio.</audio>`;
+                    }
                 }
             }
-        }
+        } catch (e) { console.error("Error cargando datos:", e); }
     }
     init();
 </script>
