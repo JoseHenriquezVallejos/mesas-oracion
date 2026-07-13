@@ -23,7 +23,6 @@
         
         .faq-section { padding: 15px; }
         
-        /* Estilos de accesibilidad ajustados */
         .accordion { 
             background: #0f172a; 
             color: #ffffff; 
@@ -41,7 +40,7 @@
         .accordion:hover { background: #1e293b; }
         
         .panel { 
-            padding: 0 18px; 
+            padding: 15px 18px; /* Padding ajustado para mejor equilibrio */
             background-color: #f8fafc; 
             max-height: 0; 
             overflow: hidden; 
@@ -49,9 +48,10 @@
             border-left: 4px solid #0f172a; 
             margin-bottom: 10px;
             font-size: 17px; 
-            color: #0f172a; /* AZUL PROFUNDO aplicado aquí */
+            color: #0f172a; 
             line-height: 1.6;
-            font-weight: 500; /* Un poco más de peso para mejorar legibilidad */
+            font-weight: 500;
+            text-align: justify; /* AQUÍ ESTÁ EL AJUSTE PARA CUADRAR EL TEXTO */
         }
         
         .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
@@ -118,7 +118,7 @@
     infoRiman.forEach(item => {
         faqContainer.innerHTML += `
             <button class="accordion">${item.t}</button>
-            <div class="panel"><p>${item.c}</p></div>`;
+            <div class="panel">${item.c}</div>`;
     });
 
     const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSU-bpcGNEsdx8LCiX7kkz4hVmn1AY0MoqjiXA4saZ9QYdKhCuzeN5qramsCIvYIpjMrM5nmaSvxg8V/pub?gid=0&single=true&output=csv';
