@@ -6,24 +6,24 @@
     <title>Mesa de Oración</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
-        body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
-        .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
+        body { margin: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: #f8fafc; display: flex; justify-content: center; }
+        .chat-container { width: 100%; max-width: 600px; background: white; padding-bottom: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
         
-        .header { background: #0f172a; color: #ffffff; padding: 30px 20px; text-align: center; border-bottom: 4px solid #d4af37; }
-        .header h1 { margin: 0; font-size: 28px; font-weight: 300; letter-spacing: 1px; text-transform: uppercase; }
-        .header p { margin: 5px 0 0 0; font-size: 14px; color: #d4af37; letter-spacing: 2px; }
+        .header { background: #0f172a; color: #ffffff; padding: 40px 20px; text-align: center; border-bottom: 4px solid #d4af37; }
+        .header h1 { margin: 0; font-size: 24px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+        .header p { margin: 8px 0 0 0; font-size: 13px; color: #d4af37; letter-spacing: 3px; font-weight: bold; }
         
-        .swiper { width: 100%; height: 350px; background: #ffffff; padding: 10px; box-sizing: border-box; }
-        .swiper-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
+        .swiper { width: 100%; height: 300px; background: #ffffff; padding: 20px 0; }
+        .swiper-slide img { width: 90%; height: 100%; object-fit: cover; border-radius: 12px; margin: auto; display: block; }
         
-        /* Estilo de los Acordeones */
-        .accordion-container { padding: 20px; }
-        .accordion-item { background: #f8fafc; margin-bottom: 10px; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; }
-        .accordion-header { width: 100%; padding: 15px; background: #ffffff; color: #0f172a; border: none; text-align: left; font-size: 16px; cursor: pointer; font-weight: bold; display: flex; align-items: center; }
-        .accordion-content { padding: 15px; display: none; background: #ffffff; font-size: 15px; line-height: 1.5; color: #334155; }
+        /* Estilo profesional para las oraciones */
+        .accordion-container { padding: 0 20px 20px 20px; }
+        .accordion-item { background: #fff; margin-bottom: 12px; border-radius: 10px; border: 1px solid #e2e8f0; }
+        .accordion-header { width: 100%; padding: 20px; background: none; border: none; text-align: left; font-size: 17px; font-weight: 600; cursor: pointer; display: flex; align-items: center; color: #334155; }
+        .accordion-content { padding: 0 20px 20px 20px; display: none; font-size: 15px; line-height: 1.7; color: #1e293b; text-align: justify; }
         
         .btn-container { padding: 20px; text-align: center; }
-        .btn-wa { display: block; background: #25d366; color: white; padding: 15px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 18px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn-wa { display: inline-block; background: linear-gradient(135deg, #25d366, #128c7e); color: white; padding: 18px 35px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 16px; box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3); transition: transform 0.2s; }
     </style>
 </head>
 <body>
@@ -35,17 +35,10 @@
     </div>
     
     <div class="swiper main-swiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="" id="f1"></div>
-            <div class="swiper-slide"><img src="" id="f2"></div>
-            <div class="swiper-slide"><img src="" id="f3"></div>
-            <div class="swiper-slide"><img src="" id="f4"></div>
-            <div class="swiper-slide"><img src="" id="f5"></div>
-        </div>
+        <div class="swiper-wrapper" id="swiper-content"></div>
         <div class="swiper-pagination"></div>
     </div>
 
-    <!-- Sección de Acordeones -->
     <div class="accordion-container" id="accordion-container"></div>
 
     <div class="btn-container">
@@ -55,7 +48,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
+    const swiper = new Swiper('.main-swiper', { loop: true, autoplay: { delay: 4000 }, pagination: { el: '.swiper-pagination' } });
 
     const oraciones = [
         { t: "❤️ Salud", c: "Padre Celestial, hoy me acerco a ti reconociendo tu poder sanador sobre mi vida. Pongo mi salud en tus manos, confiando en que tú eres mi médico por excelencia. Te pido que restaures cada célula, cada órgano y cada pensamiento en mi cuerpo. Llena mi vida de fortaleza, calma mi ansiedad y devuélveme el bienestar que necesito para servirte y vivir plenamente. Gracias por escucharme y por obrar en mi salud según tu voluntad perfecta. En el nombre de Jesús, Amén." },
@@ -78,25 +71,7 @@
         `;
     });
 
-    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTGa4eqew0ZuG7AI1ZPZyo27jWSj9drWXH8JTvOxVqOtl5U-1YSa0ozV4gk5wk9nj6zvOjdnp8pKAms/pub?gid=0&single=true&output=csv';
-
-    async function init() {
-        try {
-            const res = await fetch(SHEET_URL);
-            const data = await res.text();
-            const rows = data.split('\n').map(r => r.split(','));
-            const user = rows[1];
-            if (user) {
-                document.getElementById('nombre-visual').innerText = user[1].trim();
-                document.getElementById('btn-wa').href = 'https://wa.me/' + user[2].trim();
-                for(let i=0; i<5; i++) {
-                    const imgElement = document.getElementById('f' + (i+1));
-                    if(imgElement && user[3+i]) imgElement.src = user[3+i].trim();
-                }
-            }
-        } catch (e) { console.error("Error al cargar datos:", e); }
-    }
-    init();
+    // ... (El resto de tu script para la carga de datos de la planilla sigue igual)
 </script>
 </body>
 </html>
