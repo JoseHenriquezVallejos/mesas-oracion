@@ -4,75 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesa de Oración</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
-        body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
-        .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
-        
-        .header { background: #0f172a; color: #ffffff; padding: 30px 20px; text-align: center; border-bottom: 4px solid #d4af37; }
-        .header h1 { margin: 0; font-size: 28px; font-weight: 300; letter-spacing: 1px; text-transform: uppercase; }
-        .header p { margin: 5px 0 0 0; font-size: 14px; color: #d4af37; letter-spacing: 2px; }
-        
-        .swiper { width: 100%; height: 350px; background: #ffffff; padding: 10px; box-sizing: border-box; }
-        .swiper-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
-        
-        .btn-container { padding: 20px; text-align: center; }
-        .btn-wa { display: block; background: #25d366; color: white; padding: 15px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 18px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        body { font-family: sans-serif; background: #0f172a; color: white; padding: 20px; max-width: 600px; margin: auto; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .accordion-item { background: #1e293b; margin-bottom: 10px; border-radius: 8px; overflow: hidden; }
+        .accordion-header { width: 100%; padding: 15px; background: #334155; color: white; border: none; text-align: left; font-size: 18px; cursor: pointer; }
+        .accordion-content { padding: 15px; display: none; background: #1e293b; }
+        audio { width: 100%; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-<div class="chat-container">
-    <div class="header">
-        <h1 id="nombre-visual">Cargando...</h1>
-        <p>MESA DE ORACIÓN</p>
-    </div>
-    
-    <div class="swiper main-swiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="" id="f1"></div>
-            <div class="swiper-slide"><img src="" id="f2"></div>
-            <div class="swiper-slide"><img src="" id="f3"></div>
-            <div class="swiper-slide"><img src="" id="f4"></div>
-            <div class="swiper-slide"><img src="" id="f5"></div>
-        </div>
-        <div class="swiper-pagination"></div>
-    </div>
-
-    <div class="btn-container">
-        <a id="btn-wa" href="#" class="btn-wa">🙏 Enviar Petición de Oración</a>
-    </div>
+<div class="header">
+    <h1 id="nombre-visual">Cargando...</h1>
+    <p>Mesa de Oración</p>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-    new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
+<div id="accordion-container">
+    </div>
 
-    // REEMPLAZA ESTA URL CON LA DE TU NUEVA PLANILLA
+<script>
+    // CAMBIA ESTO POR TU URL DE PLANILLA CON &output=csv
     const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTGa4eqew0ZuG7AI1ZPZyo27jWSj9drWXH8JTvOxVqOtl5U-1YSa0ozV4gk5wk9nj6zvOjdnp8pKAms/pub?gid=0&single=true&output=csv';
 
-    async function init() {
-        const params = new URLSearchParams(window.location.search);
-        const id = params.get('id');
-        if (!id) return;
+    async function cargarDatos() {
+        const res = await fetch(SHEET_URL);
+        const data = await res.text();
+        const rows = data.split('\n');
+        const user = rows[1].split(','); // Asumimos fila 2 para el usuario
 
-        try {
-            const res = await fetch(SHEET_URL);
-            const data = await res.text();
-            const rows = data.split('\n').map(r => r.split(','));
-            const user = rows.find(r => r[0] && r[0].trim() === id.trim());
+        document.getElementById('nombre-visual').innerText = user[1];
 
-            if (user) {
-                document.getElementById('nombre-visual').innerText = user[1].trim();
-                document.getElementById('btn-wa').href = 'https://wa.me/' + user[2].trim();
-                
-                for(let i=0; i<5; i++) {
-                    if(document.getElementById('f' + (i+1))) document.getElementById('f' + (i+1)).src = user[3+i].trim();
-                }
-            }
-        } catch (e) { console.error("Error al cargar datos:", e); }
+        const titulos = ["Salud", "Familia", "Trabajo", "Finanzas", "Paz Mental", "Sabiduría", "Propósito"];
+        const emojis = ["❤️", "🏠", "💼", "💰", "🕊️", "🧠", "🎯"];
+        
+        const container = document.getElementById('accordion-container');
+        
+        for(let i=0; i<7; i++) {
+            container.innerHTML += `
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggle(this)">${emojis[i]} ${titulos[i]}</button>
+                    <div class="accordion-content">
+                        <p>Repite esta oración con FE...</p>
+                        <audio controls>
+                            <source src="${user[8+i]}" type="audio/mpeg">
+                        </audio>
+                    </div>
+                </div>
+            `;
+        }
     }
-    init();
+
+    function toggle(btn) {
+        const content = btn.nextElementSibling;
+        content.style.display = (content.style.display === "block") ? "none" : "block";
+    }
+
+    cargarDatos();
 </script>
 </body>
 </html>
