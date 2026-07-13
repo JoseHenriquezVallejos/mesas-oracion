@@ -53,18 +53,16 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    // 1. Inicialización idéntica a Riman
     const swiper = new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
 
-    // 2. Acordeones
-    const baseOracion = "<strong>Repite esta oración con FE:</strong><br><br>";
+    // Oraciones definidas
     const oraciones = [
-        { t: "❤️ Salud", c: baseOracion + "Padre Celestial, hoy me acerco a ti reconociendo tu poder sanador..." },
-        { t: "👪 Familia", c: baseOracion + "Padre Celestial, pongo a mi familia en tus manos hoy..." },
-        { t: "💼 Trabajo", c: baseOracion + "Padre Celestial, te presento mi trabajo..." },
-        { t: "➕ Fe y ánimo", c: baseOracion + "Padre Celestial, en momentos de incertidumbre..." },
-        { t: "🙏 Agradecimiento", c: baseOracion + "Padre Celestial, vengo ante ti con un corazón..." },
-        { t: "📜 Petición especial", c: baseOracion + "Padre Celestial, hoy vengo ante ti con esta petición..." }
+        { t: "❤️ Salud", c: '<div id="audio-salud"></div>' + "Padre Celestial, hoy me acerco a ti reconociendo tu poder sanador..." },
+        { t: "👪 Familia", c: "Padre Celestial, pongo a mi familia en tus manos hoy..." },
+        { t: "💼 Trabajo", c: "Padre Celestial, te presento mi trabajo..." },
+        { t: "➕ Fe y ánimo", c: "Padre Celestial, en momentos de incertidumbre..." },
+        { t: "🙏 Agradecimiento", c: "Padre Celestial, vengo ante ti con un corazón..." },
+        { t: "📜 Petición especial", c: "Padre Celestial, hoy vengo ante ti con esta petición..." }
     ];
 
     const accContainer = document.getElementById('accordion-container');
@@ -72,7 +70,6 @@
         accContainer.innerHTML += `<div class="accordion-item"><button class="accordion-header" onclick="this.nextElementSibling.style.display=(this.nextElementSibling.style.display==='block'?'none':'block')">${item.t}</button><div class="accordion-content">${item.c}</div></div>`;
     });
 
-    // 3. Carga de datos
     const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTGa4eqew0ZuG7AI1ZPZyo27jWSj9drWXH8JTvOxVqOtl5U-1YSa0ozV4gk5wk9nj6zvOjdnp8pKAms/pub?gid=0&single=true&output=csv';
 
     async function init() {
@@ -85,6 +82,10 @@
             document.getElementById('btn-wa').href = 'https://wa.me/' + user[2].trim();
             for(let i=0; i<5; i++) {
                 if(document.getElementById('f'+(i+1))) document.getElementById('f'+(i+1)).src = user[3+i].trim();
+            }
+            // Inyectar el reproductor en el espacio de audio-salud
+            if(user[8]) {
+                document.getElementById('audio-salud').innerHTML = `<audio controls style="width: 100%; margin-bottom: 15px;"><source src="${user[8].trim()}" type="audio/mpeg">Tu navegador no soporta audio.</audio>`;
             }
         }
     }
