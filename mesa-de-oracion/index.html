@@ -16,6 +16,12 @@
         .swiper { width: 100%; height: 350px; background: #ffffff; padding: 10px; box-sizing: border-box; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
         
+        /* Estilo de los Acordeones */
+        .accordion-container { padding: 20px; }
+        .accordion-item { background: #f8fafc; margin-bottom: 10px; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; }
+        .accordion-header { width: 100%; padding: 15px; background: #ffffff; color: #0f172a; border: none; text-align: left; font-size: 16px; cursor: pointer; font-weight: bold; display: flex; align-items: center; }
+        .accordion-content { padding: 15px; display: none; background: #ffffff; font-size: 15px; line-height: 1.5; color: #334155; }
+        
         .btn-container { padding: 20px; text-align: center; }
         .btn-wa { display: block; background: #25d366; color: white; padding: 15px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 18px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     </style>
@@ -39,6 +45,9 @@
         <div class="swiper-pagination"></div>
     </div>
 
+    <!-- Sección de Acordeones -->
+    <div class="accordion-container" id="accordion-container"></div>
+
     <div class="btn-container">
         <a id="btn-wa" href="#" class="btn-wa">🙏 Enviar Petición de Oración</a>
     </div>
@@ -48,6 +57,27 @@
 <script>
     new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
 
+    const oraciones = [
+        { t: "❤️ Salud", c: "Padre Celestial, hoy me acerco a ti reconociendo tu poder sanador sobre mi vida. Pongo mi salud en tus manos, confiando en que tú eres mi médico por excelencia. Te pido que restaures cada célula, cada órgano y cada pensamiento en mi cuerpo. Llena mi vida de fortaleza, calma mi ansiedad y devuélveme el bienestar que necesito para servirte y vivir plenamente. Gracias por escucharme y por obrar en mi salud según tu voluntad perfecta. En el nombre de Jesús, Amén." },
+        { t: "👪 Familia", c: "Padre Celestial, pongo a mi familia en tus manos hoy. Te pido que traigas paz, amor y unidad a nuestro hogar. Bendice cada vínculo entre nosotros, sana cualquier herida y permite que tu sabiduría guíe nuestras decisiones diarias. Te ruego que seas el centro de nuestra convivencia, protegiéndonos de toda discordia y fortaleciéndonos para caminar juntos en armonía bajo tu gracia. Gracias por el regalo de mi familia. En el nombre de Jesús, Amén." },
+        { t: "💼 Trabajo", c: "Padre Celestial, te presento mi trabajo y mis labores diarias. Te pido que seas tú quien guíe mis manos y mis decisiones, otorgándome la sabiduría y la diligencia necesarias para realizar mis tareas con excelencia. Bendice mis proyectos, abre puertas de oportunidad y permite que mi esfuerzo sea de provecho y bendición para otros. Que en cada desafío laboral pueda ver tu mano proveyendo y fortaleciéndome. Gracias por la capacidad de trabajar y por el sustento que me brindas. En el nombre de Jesús, Amén." },
+        { t: "➕ Fe y ánimo", c: "Padre Celestial, en momentos de incertidumbre, me refugio en ti. Te pido que fortalezcas mi corazón y renueves mi esperanza hoy. Cuando me sienta débil, sé tú mi fortaleza; cuando la duda intente entrar en mi mente, rodéame con tu paz que sobrepasa todo entendimiento. Ayúdame a caminar con fe, confiando en tus promesas y recordando siempre que no estoy solo, pues tú vas conmigo. Gracias por renovar mi espíritu y darme el ánimo para seguir adelante bajo tu luz. En el nombre de Jesús, Amén." },
+        { t: "🙏 Agradecimiento", c: "Padre Celestial, vengo ante ti con un corazón lleno de gratitud. Gracias por el regalo de la vida, por tu amor inagotable y por cada bendición, grande o pequeña, que has derramado sobre mí y los míos. Reconozco que todo lo bueno proviene de ti y te agradezco por tu guía, tu protección y por sostener mi mano en cada paso del camino. Que mi vida sea un reflejo constante de este agradecimiento y que mi espíritu siempre reconozca tu bondad. En el nombre de Jesús, Amén." },
+        { t: "📜 Petición especial", c: "Padre Celestial, hoy vengo ante ti con esta petición que pesa en mi corazón y que solo tú conoces profundamente. Te la presento con total confianza, sabiendo que tú escuchas cada ruego y que tu voluntad es perfecta y buena para mi vida. Te pido, Señor, que intervengas en esta situación, guiando cada paso, abriendo las puertas necesarias y concediéndome la paz y la sabiduría para esperar en tus tiempos. Pongo esta carga en tus manos y descanso en tu amor, creyendo en tu respuesta. En el nombre de Jesús, Amén." }
+    ];
+
+    const accContainer = document.getElementById('accordion-container');
+    oraciones.forEach(item => {
+        accContainer.innerHTML += `
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="this.nextElementSibling.style.display=(this.nextElementSibling.style.display==='block'?'none':'block')">
+                    ${item.t}
+                </button>
+                <div class="accordion-content">${item.c}</div>
+            </div>
+        `;
+    });
+
     const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTGa4eqew0ZuG7AI1ZPZyo27jWSj9drWXH8JTvOxVqOtl5U-1YSa0ozV4gk5wk9nj6zvOjdnp8pKAms/pub?gid=0&single=true&output=csv';
 
     async function init() {
@@ -56,16 +86,12 @@
             const data = await res.text();
             const rows = data.split('\n').map(r => r.split(','));
             const user = rows[1];
-
             if (user) {
                 document.getElementById('nombre-visual').innerText = user[1].trim();
                 document.getElementById('btn-wa').href = 'https://wa.me/' + user[2].trim();
-                
                 for(let i=0; i<5; i++) {
                     const imgElement = document.getElementById('f' + (i+1));
-                    if(imgElement && user[3+i]) {
-                        imgElement.src = user[3+i].trim();
-                    }
+                    if(imgElement && user[3+i]) imgElement.src = user[3+i].trim();
                 }
             }
         } catch (e) { console.error("Error al cargar datos:", e); }
