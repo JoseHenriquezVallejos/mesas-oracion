@@ -16,18 +16,17 @@
         .swiper { width: 100%; height: 300px; padding: 20px 0; }
         .swiper-slide img { width: 90%; height: 100%; object-fit: cover; border-radius: 12px; margin: auto; display: block; }
         
-        /* Acordeones: Botón Gris y Contenido Azul Profundo */
         .accordion-container { padding: 20px; }
-        .accordion-item { margin-bottom: 15px; border-radius: 8px; overflow: hidden; border: 2px solid #475569; }
+        .accordion-item { margin-bottom: 15px; border-radius: 8px; overflow: hidden; border: 2px solid #0f172a; }
         
-        /* Botón estilo Plomo/Gris */
+        /* Botón ahora en Azul Profundo */
         .accordion-header { 
-            width: 100%; padding: 22px; background: #64748b; color: white; border: none; 
+            width: 100%; padding: 22px; background: #0f172a; color: white; border: none; 
             text-align: left; font-size: 19px; font-weight: bold; cursor: pointer; 
-            display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex; align-items: center;
         }
         
-        /* Contenido: Azul Profundo y letras blancas */
+        /* Contenido en el mismo Azul Profundo */
         .accordion-content { 
             padding: 25px; display: none; background: #0f172a; 
             font-size: 18px; line-height: 1.8; color: #ffffff; text-align: justify;
@@ -59,13 +58,15 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
+    const baseOracion = "<strong>Repite esta oración con FE:</strong><br><br>";
+    
     const oraciones = [
-        { t: "❤️ Salud", c: "Padre Celestial, hoy me acerco a ti reconociendo tu poder sanador sobre mi vida. Pongo mi salud en tus manos, confiando en que tú eres mi médico por excelencia. Te pido que restaures cada célula, cada órgano y cada pensamiento en mi cuerpo. Llena mi vida de fortaleza, calma mi ansiedad y devuélveme el bienestar que necesito para servirte y vivir plenamente. Gracias por escucharme y por obrar en mi salud según tu voluntad perfecta. En el nombre de Jesús, Amén." },
-        { t: "👪 Familia", c: "Padre Celestial, pongo a mi familia en tus manos hoy. Te pido que traigas paz, amor y unidad a nuestro hogar. Bendice cada vínculo entre nosotros, sana cualquier herida y permite que tu sabiduría guíe nuestras decisiones diarias. Te ruego que seas el centro de nuestra convivencia, protegiéndonos de toda discordia y fortaleciéndonos para caminar juntos en armonía bajo tu gracia. Gracias por el regalo de mi familia. En el nombre de Jesús, Amén." },
-        { t: "💼 Trabajo", c: "Padre Celestial, te presento mi trabajo y mis labores diarias. Te pido que seas tú quien guíe mis manos y mis decisiones, otorgándome la sabiduría y la diligencia necesarias para realizar mis tareas con excelencia. Bendice mis proyectos, abre puertas de oportunidad y permite que mi esfuerzo sea de provecho y bendición para otros. Que en cada desafío laboral pueda ver tu mano proveyendo y fortaleciéndome. Gracias por la capacidad de trabajar y por el sustento que me brindas. En el nombre de Jesús, Amén." },
-        { t: "➕ Fe y ánimo", c: "Padre Celestial, en momentos de incertidumbre, me refugio en ti. Te pido que fortalezcas mi corazón y renueves mi esperanza hoy. Cuando me sienta débil, sé tú mi fortaleza; cuando la duda intente entrar en mi mente, rodéame con tu paz que sobrepasa todo entendimiento. Ayúdame a caminar con fe, confiando en tus promesas y recordando siempre que no estoy solo, pues tú vas conmigo. Gracias por renovar mi espíritu y darme el ánimo para seguir adelante bajo tu luz. En el nombre de Jesús, Amén." },
-        { t: "🙏 Agradecimiento", c: "Padre Celestial, vengo ante ti con un corazón lleno de gratitud. Gracias por el regalo de la vida, por tu amor inagotable y por cada bendición, grande o pequeña, que has derramado sobre mí y los míos. Reconozco que todo lo bueno proviene de ti y te agradezco por tu guía, tu protección y por sostener mi mano en cada paso del camino. Que mi vida sea un reflejo constante de este agradecimiento y que mi espíritu siempre reconozca tu bondad. En el nombre de Jesús, Amén." },
-        { t: "📜 Petición especial", c: "Padre Celestial, hoy vengo ante ti con esta petición que pesa en mi corazón y que solo tú conoces profundamente. Te la presento con total confianza, sabiendo que tú escuchas cada ruego y que tu voluntad es perfecta y buena para mi vida. Te pido, Señor, que intervengas en esta situación, guiando cada paso, abriendo las puertas necesarias y concediéndome la paz y la sabiduría para esperar en tus tiempos. Pongo esta carga en tus manos y descanso en tu amor, creyendo en tu respuesta. En el nombre de Jesús, Amén." }
+        { t: "❤️ Salud", c: baseOracion + "Padre Celestial, hoy me acerco a ti reconociendo tu poder sanador sobre mi vida. Pongo mi salud en tus manos, confiando en que tú eres mi médico por excelencia. Te pido que restaures cada célula, cada órgano y cada pensamiento en mi cuerpo. Llena mi vida de fortaleza, calma mi ansiedad y devuélveme el bienestar que necesito para servirte y vivir plenamente. Gracias por escucharme y por obrar en mi salud según tu voluntad perfecta. En el nombre de Jesús, Amén." },
+        { t: "👪 Familia", c: baseOracion + "Padre Celestial, pongo a mi familia en tus manos hoy. Te pido que traigas paz, amor y unidad a nuestro hogar. Bendice cada vínculo entre nosotros, sana cualquier herida y permite que tu sabiduría guíe nuestras decisiones diarias. Te ruego que seas el centro de nuestra convivencia, protegiéndonos de toda discordia y fortaleciéndonos para caminar juntos en armonía bajo tu gracia. Gracias por el regalo de mi familia. En el nombre de Jesús, Amén." },
+        { t: "💼 Trabajo", c: baseOracion + "Padre Celestial, te presento mi trabajo y mis labores diarias. Te pido que seas tú quien guíe mis manos y mis decisiones, otorgándome la sabiduría y la diligencia necesarias para realizar mis tareas con excelencia. Bendice mis proyectos, abre puertas de oportunidad y permite que mi esfuerzo sea de provecho y bendición para otros. Que en cada desafío laboral pueda ver tu mano proveyendo y fortaleciéndome. Gracias por la capacidad de trabajar y por el sustento que me brindas. En el nombre de Jesús, Amén." },
+        { t: "➕ Fe y ánimo", c: baseOracion + "Padre Celestial, en momentos de incertidumbre, me refugio en ti. Te pido que fortalezcas mi corazón y renueves mi esperanza hoy. Cuando me sienta débil, sé tú mi fortaleza; cuando la duda intente entrar en mi mente, rodéame con tu paz que sobrepasa todo entendimiento. Ayúdame a caminar con fe, confiando en tus promesas y recordando siempre que no estoy solo, pues tú vas conmigo. Gracias por renovar mi espíritu y darme el ánimo para seguir adelante bajo tu luz. En el nombre de Jesús, Amén." },
+        { t: "🙏 Agradecimiento", c: baseOracion + "Padre Celestial, vengo ante ti con un corazón lleno de gratitud. Gracias por el regalo de la vida, por tu amor inagotable y por cada bendición, grande o pequeña, que has derramado sobre mí y los míos. Reconozco que todo lo bueno proviene de ti y te agradezco por tu guía, tu protección y por sostener mi mano en cada paso del camino. Que mi vida sea un reflejo constante de este agradecimiento y que mi espíritu siempre reconozca tu bondad. En el nombre de Jesús, Amén." },
+        { t: "📜 Petición especial", c: baseOracion + "Padre Celestial, hoy vengo ante ti con esta petición que pesa en mi corazón y que solo tú conoces profundamente. Te la presento con total confianza, sabiendo que tú escuchas cada ruego y que tu voluntad es perfecta y buena para mi vida. Te pido, Señor, que intervengas en esta situación, guiando cada paso, abriendo las puertas necesarias y concediéndome la paz y la sabiduría para esperar en tus tiempos. Pongo esta carga en tus manos y descanso en tu amor, creyendo en tu respuesta. En el nombre de Jesús, Amén." }
     ];
 
     const accContainer = document.getElementById('accordion-container');
