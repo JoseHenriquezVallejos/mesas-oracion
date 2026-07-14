@@ -1,1 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funnel Riman Academy</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <style>
+        body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
+        .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
+        .header { background: #0f172a; color: #ffffff; padding: 30px 20px; text-align: center; border-bottom: 4px solid #d4af37; }
+        .header h1 { margin: 0; font-size: 28px; font-weight: 300; letter-spacing: 1px; text-transform: uppercase; }
+        .header p { margin: 5px 0 0 0; font-size: 14px; color: #d4af37; letter-spacing: 2px; }
+        .swiper { width: 100%; height: 350px; background: #ffffff; padding: 10px; box-sizing: border-box; }
+        .swiper-slide { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .swiper-slide img { width: 100%; height: 260px; object-fit: contain; display: block; }
+        .slide-desc { font-size: 14px; color: #334155; margin-top: 8px; font-weight: 500; text-align: center; padding: 0 10px; }
+        .test-swiper { height: 350px !important; background: #f8fafc; margin-top: 30px; border-top: 1px solid #e2e8f0; }
+        .test-swiper .swiper-slide img { padding: 20px; box-sizing: border-box; object-fit: contain; }
+        .section-title { padding: 30px 15px 10px 15px; font-weight: bold; color: #1e293b; font-size: 18px; }
+        .faq-section { padding: 15px; }
+        .accordion { background: #0f172a; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; transition: 0.4s; }
+        .accordion:hover { background: #334155; }
+        .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; border-left: 3px solid #d4af37; margin-bottom: 8px; text-align: justify; }
+        .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
+        .btn-action { background: #334155; color: white; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; }
+        .btn-gold { background: #d4af37; }
+        .btn-green { background: #0fb396; }
+        .btn-diamond { background: #2563eb; grid-column: span 2; font-size: 16px; padding: 12px; }
+    </style>
+</head>
+<body>
 
+<div class="chat-container">
+    <div class="header">
+        <h1 id="nombre-visual">Cargando...</h1>
+        <p id="subtitulo-visual">Cargando...</p>
+    </div>
+    
+    <div class="swiper main-swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="" id="f1"><p id="desc1" class="slide-desc"></p></div>
+            <div class="swiper-slide"><img src="" id="f2"><p id="desc2" class="slide-desc"></p></div>
+            <div class="swiper-slide"><img src="" id="f3"><p id="desc3" class="slide-desc"></p></div>
+            <div class="swiper-slide"><img src="" id="f4"><p id="desc4" class="slide-desc"></p></div>
+            <div class="swiper-slide"><img src="" id="f5"><p id="desc5" class="slide-desc"></p></div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="section-title">Resultados Reales</div>
+    <div class="swiper test-swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="" id="t1"></div>
+            <div class="swiper-slide"><img src="" id="t2"></div>
+            <div class="swiper-slide"><img src="" id="t3"></div>
+            <div class="swiper-slide"><img src="" id="t4"></div>
+            <div class="swiper-slide"><img src="" id="t5"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="faq-section">
+        <button class="accordion">Cargando...</button>
+        <div class="panel"><p></p></div>
+        <button class="accordion">Cargando...</button>
+        <div class="panel"><p></p></div>
+        <button class="accordion">Cargando...</button>
+        <div class="panel"><p></p></div>
+    </div>
+
+    <div class="button-grid">
+        <a id="btn-tienda" href="#" class="btn-action btn-gold">🛍️ Ver Tienda</a>
+        <a id="btn-wa" href="#" class="btn-action btn-green">💬 WhatsApp</a>
+        <a id="btn-planner" href="#" class="btn-action btn-diamond">¡Quiero ser Planner! 💎</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
+    new Swiper('.test-swiper', { loop: true, pagination: { el: '.swiper-pagination' } });
+
+    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSU-bpcGNEsdx8LCiX7kkz4hVmn1AY0MoqjiXA4saZ9QYdKhCuzeN5qramsCIvYIpjMrM5nmaSvxg8V/pub?gid=0&single=true&output=csv';
+
+    async function init() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        if (!id) return;
+
+        try {
+            const res = await fetch(SHEET_URL);
+            const data = await res.text();
+            
+            const rows = data.split('\n').map(row => {
+                const result = [];
+                let cell = '';
+                let inQuotes = false;
+                for (let char of row) {
+                    if (char === '"') inQuotes = !inQuotes;
+                    else if (char === ',' && !inQuotes) { result.push(cell); cell = ''; }
+                    else cell += char;
+                }
+                result.push(cell);
+                return result;
+            });
+
+            const user = rows.find(r => r[0] && r[0].trim() === id.trim());
+
+            if (user) {
+                // Info Basica
+                document.getElementById('nombre-visual').innerText = user[1].trim(); // Col B
+                document.getElementById('subtitulo-visual').innerText = user[2].trim(); // Col C
+                document.getElementById('btn-wa').href = 'https://wa.me/' + user[3].trim(); // Col D
+                document.getElementById('btn-tienda').href = user[4].trim(); // Col E
+                document.getElementById('btn-planner').href = user[4].trim(); // Col E
+                
+                // Imágenes (Cambiaron de índice por la nueva columna C)
+                for(let i=0; i<5; i++) {
+                    let fotoCol = 5 + (i * 2);
+                    let descCol = 6 + (i * 2);
+                    if(document.getElementById('f' + (i+1))) document.getElementById('f' + (i+1)).src = user[fotoCol] ? user[fotoCol].trim() : "";
+                    if(document.getElementById('desc' + (i+1))) document.getElementById('desc' + (i+1)).innerText = user[descCol] ? user[descCol].trim() : "";
+                    if(document.getElementById('t' + (i+1))) document.getElementById('t' + (i+1)).src = user[15+i] ? user[15+i].trim() : "";
+                }
+
+                // Acordeones (Columna T = Índice 20)
+                const acordeones = document.querySelectorAll('.accordion');
+                acordeones.forEach((acc, index) => {
+                    let titleCol = 20 + (index * 2);
+                    let contentCol = 21 + (index * 2);
+                    if (user[titleCol]) acc.innerHTML = user[titleCol].trim();
+                    let panel = acc.nextElementSibling;
+                    if (panel && user[contentCol]) panel.querySelector('p').innerText = user[contentCol].trim();
+                });
+            }
+        } catch (e) { console.error("Error:", e); }
+    }
+    init();
+
+    document.querySelectorAll('.accordion').forEach(acc => {
+        acc.addEventListener('click', function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
+        });
+    });
+</script>
+</body>
+</html>
