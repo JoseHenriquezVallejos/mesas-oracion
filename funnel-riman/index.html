@@ -34,7 +34,7 @@
 <div class="chat-container">
     <div class="header">
         <h1 id="nombre-visual">Cargando...</h1>
-        <p>RIMAN PLANNER</p>
+        <p id="subtitulo-visual">Cargando...</p>
     </div>
     
     <div class="swiper main-swiper">
@@ -108,25 +108,27 @@
             const user = rows.find(r => r[0] && r[0].trim() === id.trim());
 
             if (user) {
-                document.getElementById('nombre-visual').innerText = user[1].trim();
-                document.getElementById('btn-wa').href = 'https://wa.me/' + user[2].trim();
-                document.getElementById('btn-tienda').href = user[3].trim();
-                document.getElementById('btn-planner').href = user[3].trim();
+                // Info Basica
+                document.getElementById('nombre-visual').innerText = user[1].trim(); // Col B
+                document.getElementById('subtitulo-visual').innerText = user[2].trim(); // Col C
+                document.getElementById('btn-wa').href = 'https://wa.me/' + user[3].trim(); // Col D
+                document.getElementById('btn-tienda').href = user[4].trim(); // Col E
+                document.getElementById('btn-planner').href = user[4].trim(); // Col E
                 
-                // Imágenes y Descripciones
+                // Imágenes (Cambiaron de índice por la nueva columna C)
                 for(let i=0; i<5; i++) {
-                    let fotoCol = 4 + (i * 2);
-                    let descCol = 5 + (i * 2);
+                    let fotoCol = 5 + (i * 2);
+                    let descCol = 6 + (i * 2);
                     if(document.getElementById('f' + (i+1))) document.getElementById('f' + (i+1)).src = user[fotoCol] ? user[fotoCol].trim() : "";
                     if(document.getElementById('desc' + (i+1))) document.getElementById('desc' + (i+1)).innerText = user[descCol] ? user[descCol].trim() : "";
-                    if(document.getElementById('t' + (i+1))) document.getElementById('t' + (i+1)).src = user[14+i] ? user[14+i].trim() : "";
+                    if(document.getElementById('t' + (i+1))) document.getElementById('t' + (i+1)).src = user[15+i] ? user[15+i].trim() : "";
                 }
 
-                // Acordeones (Columna T = Índice 19)
+                // Acordeones (Columna T = Índice 20)
                 const acordeones = document.querySelectorAll('.accordion');
                 acordeones.forEach((acc, index) => {
-                    let titleCol = 19 + (index * 2);
-                    let contentCol = 20 + (index * 2);
+                    let titleCol = 20 + (index * 2);
+                    let contentCol = 21 + (index * 2);
                     if (user[titleCol]) acc.innerHTML = user[titleCol].trim();
                     let panel = acc.nextElementSibling;
                     if (panel && user[contentCol]) panel.querySelector('p').innerText = user[contentCol].trim();
