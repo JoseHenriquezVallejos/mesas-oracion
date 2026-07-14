@@ -45,7 +45,6 @@
     
     <div class="swiper main-swiper">
         <div class="swiper-wrapper">
-            <!-- Cada slide ahora tiene su ID de imagen y su ID de descripción -->
             <div class="swiper-slide"><img src="" id="f1"><p id="desc1" class="slide-desc"></p></div>
             <div class="swiper-slide"><img src="" id="f2"><p id="desc2" class="slide-desc"></p></div>
             <div class="swiper-slide"><img src="" id="f3"><p id="desc3" class="slide-desc"></p></div>
@@ -110,12 +109,16 @@
                 document.getElementById('btn-planner').href = user[3].trim();
                 
                 for(let i=0; i<5; i++) {
-                    // Cargar imágenes
-                    if(document.getElementById('f' + (i+1))) document.getElementById('f' + (i+1)).src = user[4+i].trim();
-                    // Cargar descripciones (asumiendo que empiezan en la columna 14, ajusta si es necesario)
-                    if(document.getElementById('desc' + (i+1))) document.getElementById('desc' + (i+1)).innerText = user[14+i] ? user[14+i].trim() : "";
-                    // Cargar testimonios
-                    if(document.getElementById('t' + (i+1))) document.getElementById('t' + (i+1)).src = user[9+i].trim();
+                    // Calculamos la posición exacta basándonos en tu estructura de F1, Desc1, F2, Desc2...
+                    // f1 empieza en la columna 4. Cada par (foto + desc) ocupa 2 columnas.
+                    let fotoCol = 4 + (i * 2);
+                    let descCol = 5 + (i * 2);
+                    
+                    if(document.getElementById('f' + (i+1))) document.getElementById('f' + (i+1)).src = user[fotoCol].trim();
+                    if(document.getElementById('desc' + (i+1))) document.getElementById('desc' + (i+1)).innerText = user[descCol] ? user[descCol].trim() : "";
+                    
+                    // Los testimonios siguen después de las fotos y descripciones, los dejamos igual.
+                    if(document.getElementById('t' + (i+1))) document.getElementById('t' + (i+1)).src = user[14+i].trim();
                 }
             }
         } catch (e) { console.error("Error al cargar datos:", e); }
