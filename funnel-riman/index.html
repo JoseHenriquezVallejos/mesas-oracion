@@ -61,12 +61,12 @@
     </div>
 
     <div class="faq-section">
-        <button class="accordion">💼 Sistema de Conversión Automática</button>
-        <div class="panel"><p>La falta de estructura es la principal barrera para convertir prospectos en clientes.</p></div>
-        <button class="accordion">📈 Negocio Internacional sin Costo</button>
-        <div class="panel"><p>Escalar Riman a nivel global exige una infraestructura que sostenga el crecimiento.</p></div>
-        <button class="accordion">🤝 Aliado Estratégico de Riman</button>
-        <div class="panel"><p>Representar una marca internacional con respaldo tecnológico es tu ventaja competitiva.</p></div>
+        <button class="accordion">Cargando...</button>
+        <div class="panel"><p></p></div>
+        <button class="accordion">Cargando...</button>
+        <div class="panel"><p></p></div>
+        <button class="accordion">Cargando...</button>
+        <div class="panel"><p></p></div>
     </div>
 
     <div class="button-grid">
@@ -92,7 +92,6 @@
             const res = await fetch(SHEET_URL);
             const data = await res.text();
             
-            // Lógica robusta para separar columnas ignorando comas en texto
             const rows = data.split('\n').map(row => {
                 const result = [];
                 let cell = '';
@@ -114,6 +113,7 @@
                 document.getElementById('btn-tienda').href = user[3].trim();
                 document.getElementById('btn-planner').href = user[3].trim();
                 
+                // Imágenes y Descripciones
                 for(let i=0; i<5; i++) {
                     let fotoCol = 4 + (i * 2);
                     let descCol = 5 + (i * 2);
@@ -121,10 +121,28 @@
                     if(document.getElementById('desc' + (i+1))) document.getElementById('desc' + (i+1)).innerText = user[descCol] ? user[descCol].trim() : "";
                     if(document.getElementById('t' + (i+1))) document.getElementById('t' + (i+1)).src = user[14+i] ? user[14+i].trim() : "";
                 }
+
+                // Acordeones (Columna T = Índice 19)
+                const acordeones = document.querySelectorAll('.accordion');
+                acordeones.forEach((acc, index) => {
+                    let titleCol = 19 + (index * 2);
+                    let contentCol = 20 + (index * 2);
+                    if (user[titleCol]) acc.innerHTML = user[titleCol].trim();
+                    let panel = acc.nextElementSibling;
+                    if (panel && user[contentCol]) panel.querySelector('p').innerText = user[contentCol].trim();
+                });
             }
         } catch (e) { console.error("Error:", e); }
     }
     init();
+
+    document.querySelectorAll('.accordion').forEach(acc => {
+        acc.addEventListener('click', function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
+        });
+    });
 </script>
 </body>
 </html>
