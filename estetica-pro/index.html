@@ -36,17 +36,15 @@
     
     <div class="swiper main-swiper">
         <div class="swiper-wrapper">
-            <!-- Bloque 1: Imágenes con descripción (f1 al f5) -->
+            <!-- 8 Slides (5 Historia + 3 Testimonios, todos con imagen y descripción) -->
             <div class="swiper-slide"><img id="f1" src=""><p id="desc1" class="slide-desc"></p></div>
             <div class="swiper-slide"><img id="f2" src=""><p id="desc2" class="slide-desc"></p></div>
             <div class="swiper-slide"><img id="f3" src=""><p id="desc3" class="slide-desc"></p></div>
             <div class="swiper-slide"><img id="f4" src=""><p id="desc4" class="slide-desc"></p></div>
             <div class="swiper-slide"><img id="f5" src=""><p id="desc5" class="slide-desc"></p></div>
-            <!-- Bloque 2: Imágenes de resultados (t1 al t4) -->
-            <div class="swiper-slide"><img id="t1" src=""></div>
-            <div class="swiper-slide"><img id="t2" src=""></div>
-            <div class="swiper-slide"><img id="t3" src=""></div>
-            <div class="swiper-slide"><img id="t4" src=""></div>
+            <div class="swiper-slide"><img id="f6" src=""><p id="desc6" class="slide-desc"></p></div>
+            <div class="swiper-slide"><img id="f7" src=""><p id="desc7" class="slide-desc"></p></div>
+            <div class="swiper-slide"><img id="f8" src=""><p id="desc8" class="slide-desc"></p></div>
         </div>
         <div class="swiper-pagination"></div>
     </div>
@@ -65,7 +63,7 @@
 <script>
     new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3500 }, pagination: { el: '.swiper-pagination' } });
 
-    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR4K0WrpNMABKiNO2BOx3QZOOMo2Nui81vWBq15ocGym7WC8D6hvVEmj7KNRACuRmxe48qxx1JZgzlo/pub?gid=0&single=true&output=csv';
+    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSU-bpcGNEsdx8LCiX7kkz4hVmn1AY0MoqjiXA4saZ9QYdKhCuzeN5qramsCIvYIpjMrM5nmaSvxg8V/pub?gid=0&single=true&output=csv';
 
     async function init() {
         const params = new URLSearchParams(window.location.search);
@@ -91,21 +89,18 @@
             document.getElementById('subtitulo-visual').innerText = user[2].trim();
             document.getElementById('btn-wa').href = 'https://wa.me/' + user[3].trim();
             
-            // Cargar f1-f5 con descripciones
-            for(let i=0; i<5; i++) {
+            // Cargar los 8 bloques (foto + descripción)
+            // Las fotos comienzan en columna E (índice 4)
+            for(let i=0; i<8; i++) {
                 let fotoCol = 4 + (i * 2);
                 let descCol = 5 + (i * 2);
                 if(document.getElementById('f'+(i+1))) document.getElementById('f'+(i+1)).src = user[fotoCol] ? user[fotoCol].trim() : "";
                 if(document.getElementById('desc'+(i+1))) document.getElementById('desc'+(i+1)).innerText = user[descCol] ? user[descCol].trim() : "";
             }
-            // Cargar t1-t4 (sin descripción)
-            for(let i=0; i<4; i++) {
-                let tCol = 14 + i;
-                if(document.getElementById('t'+(i+1))) document.getElementById('t'+(i+1)).src = user[tCol] ? user[tCol].trim() : "";
-            }
-            // Cargar acordeones (A partir de columna S - índice 18)
+            
+            // Los acordeones comienzan justo después de la última descripción (índice 20)
             document.querySelectorAll('.accordion').forEach((acc, index) => {
-                let tCol = 18 + (index * 2); let cCol = 19 + (index * 2);
+                let tCol = 20 + (index * 2); let cCol = 21 + (index * 2);
                 if (user[tCol]) acc.innerHTML = user[tCol].trim();
                 let panel = acc.nextElementSibling;
                 if (panel && user[cCol]) panel.querySelector('p').innerText = user[cCol].trim();
