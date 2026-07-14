@@ -22,9 +22,9 @@
         .section-title { padding: 30px 15px 10px 15px; font-weight: bold; color: #1e293b; font-size: 18px; }
         
         .faq-section { padding: 15px; }
-        .accordion { background: #334155; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; transition: 0.4s; }
-        .accordion:hover { background: #475569; }
-        .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; border-left: 3px solid #334155; margin-bottom: 8px; text-align: justify; }
+        .accordion { background: #0f172a; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; transition: 0.4s; }
+        .accordion:hover { background: #334155; }
+        .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; border-left: 3px solid #d4af37; margin-bottom: 8px; text-align: justify; }
         
         .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
         .btn-action { background: #334155; color: white; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; }
@@ -65,20 +65,14 @@
     </div>
 
     <div class="faq-section">
-        <button class="accordion">✨ ¿Qué es Riman?</button>
-        <div class="panel"><p>Riman es la marca #1 de belleza coreana que fusiona ingredientes botánicos con ciencia patentada para transformar tu piel desde el nivel celular.</p></div>
+        <button class="accordion">💼 Sistema de Conversión Automática</button>
+        <div class="panel"><p>La falta de estructura es la principal barrera para convertir prospectos en clientes. Este sistema está diseñado para elevar tu oferta y profesionalizar tu presentación digital, transformando tu página en una herramienta que trabaja para ti de forma constante.</p></div>
 
-        <button class="accordion">🔬 Tecnología de Absorción</button>
-        <div class="panel"><p>Nuestros productos utilizan sistemas avanzados de entrega para que los activos penetren profundamente, logrando resultados reales y duraderos.</p></div>
+        <button class="accordion">📈 Negocio Internacional sin Costo</button>
+        <div class="panel"><p>Escalar Riman a nivel global exige una infraestructura que sostenga el crecimiento. Como parte de nuestra red, no pagas por la tecnología; yo te facilito el sistema de ventas probado para que tu enfoque esté 100% en la gestión y el desarrollo de tu propio negocio.</p></div>
 
-        <button class="accordion">🌿 Líneas de Cuidado</button>
-        <div class="panel"><p>Contamos con: Incellderm (facial), Botalab (capilar y corporal) y Lifening (nutrición), cubriendo todas tus necesidades de belleza.</p></div>
-
-        <button class="accordion">💧 Ingredientes Exclusivos</button>
-        <div class="panel"><p>Utilizamos activos únicos de la isla de Jeju y complejos botánicos ricos en antioxidantes que protegen tu piel del envejecimiento visible.</p></div>
-
-        <button class="accordion">🤝 Nuestra Comunidad</button>
-        <div class="panel"><p>Como tu Planner, te guiaré paso a paso para que aproveches al máximo la tecnología Riman y transformes tu rutina de cuidado personal.</p></div>
+        <button class="accordion">🤝 Aliado Estratégico de Riman</button>
+        <div class="panel"><p>Representar una marca internacional con respaldo tecnológico es tu ventaja competitiva definitiva. ¿Quieres esta plataforma gratis y asegurar tu posición en nuestra red? Da clic aquí abajo en el botón: <b>Quiero Convertirme en Planner</b>.</p></div>
     </div>
 
     <div class="button-grid">
@@ -110,7 +104,7 @@
                 document.getElementById('nombre-visual').innerText = user[1].trim();
                 document.getElementById('btn-wa').href = 'https://wa.me/' + user[2].trim();
                 document.getElementById('btn-tienda').href = user[3].trim();
-                document.getElementById('btn-planner').href = user[3].trim();
+                document.getElementById('btn-planner').href = user[3].trim(); // Asegúrate de cambiar esto en tu CSV si el link de planner es distinto
                 
                 for(let i=0; i<5; i++) {
                     if(document.getElementById('f' + (i+1))) document.getElementById('f' + (i+1)).src = user[4+i].trim();
