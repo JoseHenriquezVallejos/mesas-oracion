@@ -8,26 +8,20 @@
     <style>
         body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
         .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
-        
         .header { background: #0f172a; color: #ffffff; padding: 30px 20px; text-align: center; border-bottom: 4px solid #d4af37; }
         .header h1 { margin: 0; font-size: 28px; font-weight: 300; letter-spacing: 1px; text-transform: uppercase; }
         .header p { margin: 5px 0 0 0; font-size: 14px; color: #d4af37; letter-spacing: 2px; }
-        
         .swiper { width: 100%; height: 350px; background: #ffffff; padding: 10px; box-sizing: border-box; }
         .swiper-slide { display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .swiper-slide img { width: 100%; height: 260px; object-fit: contain; display: block; }
         .slide-desc { font-size: 14px; color: #334155; margin-top: 8px; font-weight: 500; text-align: center; padding: 0 10px; }
-        
         .test-swiper { height: 350px !important; background: #f8fafc; margin-top: 30px; border-top: 1px solid #e2e8f0; }
         .test-swiper .swiper-slide img { padding: 20px; box-sizing: border-box; object-fit: contain; }
-        
         .section-title { padding: 30px 15px 10px 15px; font-weight: bold; color: #1e293b; font-size: 18px; }
-        
         .faq-section { padding: 15px; }
         .accordion { background: #0f172a; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; transition: 0.4s; }
         .accordion:hover { background: #334155; }
         .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; border-left: 3px solid #d4af37; margin-bottom: 8px; text-align: justify; }
-        
         .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
         .btn-action { background: #334155; color: white; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; }
         .btn-gold { background: #d4af37; }
@@ -68,13 +62,11 @@
 
     <div class="faq-section">
         <button class="accordion">💼 Sistema de Conversión Automática</button>
-        <div class="panel"><p>La falta de estructura es la principal barrera para convertir prospectos en clientes. Este sistema está diseñado para elevar tu oferta y profesionalizar tu presentación digital, transformando tu página en una herramienta que trabaja para ti de forma constante.</p></div>
-
+        <div class="panel"><p>La falta de estructura es la principal barrera para convertir prospectos en clientes.</p></div>
         <button class="accordion">📈 Negocio Internacional sin Costo</button>
-        <div class="panel"><p>Escalar Riman a nivel global exige una infraestructura que sostenga el crecimiento. Como parte de nuestra red, no pagas por la tecnología; yo te facilito el sistema de ventas probado para que tu enfoque esté 100% en la gestión y el desarrollo de tu propio negocio.</p></div>
-
+        <div class="panel"><p>Escalar Riman a nivel global exige una infraestructura que sostenga el crecimiento.</p></div>
         <button class="accordion">🤝 Aliado Estratégico de Riman</button>
-        <div class="panel"><p>Representar una marca internacional con respaldo tecnológico es tu ventaja competitiva definitiva. ¿Quieres esta plataforma gratis y asegurar tu posición en nuestra red? Da clic aquí abajo en el botón: <b>Quiero Convertirme en Planner</b>.</p></div>
+        <div class="panel"><p>Representar una marca internacional con respaldo tecnológico es tu ventaja competitiva.</p></div>
     </div>
 
     <div class="button-grid">
@@ -99,7 +91,21 @@
         try {
             const res = await fetch(SHEET_URL);
             const data = await res.text();
-            const rows = data.split('\n').map(r => r.split(','));
+            
+            // Lógica robusta para separar columnas ignorando comas en texto
+            const rows = data.split('\n').map(row => {
+                const result = [];
+                let cell = '';
+                let inQuotes = false;
+                for (let char of row) {
+                    if (char === '"') inQuotes = !inQuotes;
+                    else if (char === ',' && !inQuotes) { result.push(cell); cell = ''; }
+                    else cell += char;
+                }
+                result.push(cell);
+                return result;
+            });
+
             const user = rows.find(r => r[0] && r[0].trim() === id.trim());
 
             if (user) {
@@ -109,34 +115,16 @@
                 document.getElementById('btn-planner').href = user[3].trim();
                 
                 for(let i=0; i<5; i++) {
-                    // Columna E (4) es F1, F (5) es desc1. Incremento de 2 por cada par.
                     let fotoCol = 4 + (i * 2);
                     let descCol = 5 + (i * 2);
-                    
-                    if(document.getElementById('f' + (i+1))) {
-                        document.getElementById('f' + (i+1)).src = user[fotoCol] ? user[fotoCol].trim().replace(/"/g, '') : "";
-                    }
-                    if(document.getElementById('desc' + (i+1))) {
-                        document.getElementById('desc' + (i+1)).innerText = user[descCol] ? user[descCol].trim().replace(/"/g, '') : "";
-                    }
-                    
-                    // Testimonios (ajusta el índice si es necesario, ahora están en 14, 15, 16...)
-                    if(document.getElementById('t' + (i+1))) {
-                        document.getElementById('t' + (i+1)).src = user[14+i] ? user[14+i].trim().replace(/"/g, '') : "";
-                    }
+                    if(document.getElementById('f' + (i+1))) document.getElementById('f' + (i+1)).src = user[fotoCol] ? user[fotoCol].trim() : "";
+                    if(document.getElementById('desc' + (i+1))) document.getElementById('desc' + (i+1)).innerText = user[descCol] ? user[descCol].trim() : "";
+                    if(document.getElementById('t' + (i+1))) document.getElementById('t' + (i+1)).src = user[14+i] ? user[14+i].trim() : "";
                 }
             }
-        } catch (e) { console.error("Error al cargar datos:", e); }
+        } catch (e) { console.error("Error:", e); }
     }
     init();
-
-    document.querySelectorAll('.accordion').forEach(acc => {
-        acc.addEventListener('click', function() {
-            this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
-        });
-    });
 </script>
 </body>
 </html>
