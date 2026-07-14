@@ -109,16 +109,21 @@
                 document.getElementById('btn-planner').href = user[3].trim();
                 
                 for(let i=0; i<5; i++) {
-                    // Calculamos la posición exacta basándonos en tu estructura de F1, Desc1, F2, Desc2...
-                    // f1 empieza en la columna 4. Cada par (foto + desc) ocupa 2 columnas.
+                    // Columna E (4) es F1, F (5) es desc1. Incremento de 2 por cada par.
                     let fotoCol = 4 + (i * 2);
                     let descCol = 5 + (i * 2);
                     
-                    if(document.getElementById('f' + (i+1))) document.getElementById('f' + (i+1)).src = user[fotoCol].trim();
-                    if(document.getElementById('desc' + (i+1))) document.getElementById('desc' + (i+1)).innerText = user[descCol] ? user[descCol].trim() : "";
+                    if(document.getElementById('f' + (i+1))) {
+                        document.getElementById('f' + (i+1)).src = user[fotoCol] ? user[fotoCol].trim().replace(/"/g, '') : "";
+                    }
+                    if(document.getElementById('desc' + (i+1))) {
+                        document.getElementById('desc' + (i+1)).innerText = user[descCol] ? user[descCol].trim().replace(/"/g, '') : "";
+                    }
                     
-                    // Los testimonios siguen después de las fotos y descripciones, los dejamos igual.
-                    if(document.getElementById('t' + (i+1))) document.getElementById('t' + (i+1)).src = user[14+i].trim();
+                    // Testimonios (ajusta el índice si es necesario, ahora están en 14, 15, 16...)
+                    if(document.getElementById('t' + (i+1))) {
+                        document.getElementById('t' + (i+1)).src = user[14+i] ? user[14+i].trim().replace(/"/g, '') : "";
+                    }
                 }
             }
         } catch (e) { console.error("Error al cargar datos:", e); }
