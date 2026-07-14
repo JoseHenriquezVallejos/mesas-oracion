@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funnel Riman Academy</title>
+    <title>Funnel Estética Pro</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
         body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
@@ -16,34 +16,14 @@
         .swiper-slide { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 320px; }
         .swiper-slide img { width: 100%; max-height: 250px; object-fit: contain; display: block; }
         
-        .slide-desc { 
-            font-size: 15px; 
-            color: #d4af37; 
-            margin-top: 15px; 
-            font-weight: 600; 
-            text-align: center; 
-            padding: 0 15px;
-            line-height: 1.4; 
-            min-height: 3em; 
-        }
+        .slide-desc { font-size: 15px; color: #d4af37; margin-top: 15px; font-weight: 600; text-align: center; padding: 0 15px; line-height: 1.4; min-height: 3em; }
         
         .faq-section { padding: 15px; margin-top: 20px; }
         .accordion { background: #0f172a; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; }
         .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; border-left: 3px solid #d4af37; margin-bottom: 8px; text-align: justify; }
         
-        /* Botón único de WhatsApp */
-        .button-grid { display: block; padding: 15px; }
-        .btn-wa { 
-            display: block; 
-            background: #0fb396; 
-            color: white; 
-            padding: 18px; 
-            border-radius: 8px; 
-            text-align: center; 
-            text-decoration: none; 
-            font-weight: 700; 
-            font-size: 18px; 
-        }
+        .btn-container { padding: 15px; }
+        .btn-wa { display: block; background: #0fb396; color: white; padding: 18px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 700; font-size: 18px; }
     </style>
 </head>
 <body>
@@ -56,14 +36,17 @@
     
     <div class="swiper main-swiper">
         <div class="swiper-wrapper">
+            <!-- Bloque 1: Imágenes con descripción (f1 al f5) -->
             <div class="swiper-slide"><img id="f1" src=""><p id="desc1" class="slide-desc"></p></div>
             <div class="swiper-slide"><img id="f2" src=""><p id="desc2" class="slide-desc"></p></div>
             <div class="swiper-slide"><img id="f3" src=""><p id="desc3" class="slide-desc"></p></div>
             <div class="swiper-slide"><img id="f4" src=""><p id="desc4" class="slide-desc"></p></div>
             <div class="swiper-slide"><img id="f5" src=""><p id="desc5" class="slide-desc"></p></div>
-            <div class="swiper-slide"><img id="f6" src=""><p id="desc6" class="slide-desc"></p></div>
-            <div class="swiper-slide"><img id="f7" src=""><p id="desc7" class="slide-desc"></p></div>
-            <div class="swiper-slide"><img id="f8" src=""><p id="desc8" class="slide-desc"></p></div>
+            <!-- Bloque 2: Imágenes de resultados (t1 al t4) -->
+            <div class="swiper-slide"><img id="t1" src=""></div>
+            <div class="swiper-slide"><img id="t2" src=""></div>
+            <div class="swiper-slide"><img id="t3" src=""></div>
+            <div class="swiper-slide"><img id="t4" src=""></div>
         </div>
         <div class="swiper-pagination"></div>
     </div>
@@ -71,10 +54,9 @@
     <div class="faq-section">
         <button class="accordion">...</button><div class="panel"><p></p></div>
         <button class="accordion">...</button><div class="panel"><p></p></div>
-        <button class="accordion">...</button><div class="panel"><p></p></div>
     </div>
 
-    <div class="button-grid">
+    <div class="btn-container">
         <a id="btn-wa" href="#" class="btn-wa">💬 Consultar por WhatsApp</a>
     </div>
 </div>
@@ -107,18 +89,23 @@
         if (user) {
             document.getElementById('nombre-visual').innerText = user[1].trim();
             document.getElementById('subtitulo-visual').innerText = user[2].trim();
-            // Solo carga WhatsApp
             document.getElementById('btn-wa').href = 'https://wa.me/' + user[3].trim();
             
-            for(let i=0; i<8; i++) {
-                let fotoCol = 5 + (i * 2);
-                let descCol = 6 + (i * 2);
+            // Cargar f1-f5 con descripciones
+            for(let i=0; i<5; i++) {
+                let fotoCol = 4 + (i * 2);
+                let descCol = 5 + (i * 2);
                 if(document.getElementById('f'+(i+1))) document.getElementById('f'+(i+1)).src = user[fotoCol] ? user[fotoCol].trim() : "";
                 if(document.getElementById('desc'+(i+1))) document.getElementById('desc'+(i+1)).innerText = user[descCol] ? user[descCol].trim() : "";
             }
-
+            // Cargar t1-t4 (sin descripción)
+            for(let i=0; i<4; i++) {
+                let tCol = 14 + i;
+                if(document.getElementById('t'+(i+1))) document.getElementById('t'+(i+1)).src = user[tCol] ? user[tCol].trim() : "";
+            }
+            // Cargar acordeones (A partir de columna S - índice 18)
             document.querySelectorAll('.accordion').forEach((acc, index) => {
-                let tCol = 21 + (index * 2); let cCol = 22 + (index * 2);
+                let tCol = 18 + (index * 2); let cCol = 19 + (index * 2);
                 if (user[tCol]) acc.innerHTML = user[tCol].trim();
                 let panel = acc.nextElementSibling;
                 if (panel && user[cCol]) panel.querySelector('p').innerText = user[cCol].trim();
