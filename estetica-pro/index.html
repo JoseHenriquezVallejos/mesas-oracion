@@ -37,16 +37,6 @@
         .btn-green { background: #0fb396; }
         .btn-diamond { background: #2563eb; grid-column: span 2; }
         
-        .btn-wa {
-            display: block !important;
-            margin: 0 auto !important;
-            width: 100% !important;        /* Cambiado de 90% a 100% para que sea igual de largo */
-            max-width: 700px;              /* Esto asegura que no se pase del ancho del contenedor */
-            text-align: center !important;
-            padding: 18px !important;
-            box-sizing: border-box;        /* Importante para que el padding no rompa el ancho */
-        }
-        
     </style>
 </head>
 <body>
@@ -77,9 +67,12 @@
         <button class="accordion">...</button><div class="panel"><p></p></div>
     </div>
 
-    <div class="button-grid">
-        <a id="btn-wa" href="#" class="btn-action btn-green">💬 WhatsApp</a>
+    <div class="btn-container" style="display: flex; justify-content: center; width: 100%; padding: 0 15px; box-sizing: border-box;">
+        <a id="btn-wa" href="#" style="display: block; width: 100%; max-width: 670px; background: #25d366; color: white; padding: 18px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 700; font-size: 18px;">
+        💬 WhatsApp
+        </a>
     </div>
+    
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
