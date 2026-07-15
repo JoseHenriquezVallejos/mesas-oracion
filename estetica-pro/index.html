@@ -3,26 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funnel Estética Pro</title>
+    <title>Funnel Riman Academy</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
-        body { margin: 0; font-family: sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
+        body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
         .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
         .header { background: #0f172a; color: #ffffff; padding: 30px 20px; text-align: center; border-bottom: 4px solid #d4af37; }
         .header h1 { margin: 0; font-size: 28px; font-weight: 300; letter-spacing: 1px; text-transform: uppercase; }
         .header p { margin: 5px 0 0 0; font-size: 14px; color: #d4af37; letter-spacing: 2px; }
         
-        .swiper { width: 100%; background: #ffffff; padding: 10px 10px 30px 10px; }
-        .swiper-slide { display: flex; flex-direction: column; align-items: center; min-height: 320px; }
-        .swiper-slide img { width: 100%; max-height: 250px; object-fit: contain; }
-        .slide-desc { font-size: 15px; color: #d4af37; margin-top: 15px; font-weight: 600; text-align: center; padding: 0 15px; }
+        .swiper { width: 100%; height: auto !important; background: #ffffff; padding: 10px 10px 30px 10px; box-sizing: border-box; }
+        .swiper-slide { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 320px; }
+        .swiper-slide img { width: 100%; max-height: 250px; object-fit: contain; display: block; }
+        
+        /* Descripción en color dorado como el subtítulo */
+        .slide-desc { 
+            font-size: 15px; 
+            color: #d4af37; 
+            margin-top: 15px; 
+            font-weight: 600; 
+            text-align: center; 
+            padding: 0 15px;
+            line-height: 1.4; 
+            min-height: 3em; 
+        }
         
         .faq-section { padding: 15px; margin-top: 20px; }
-        .accordion { background: #0f172a; color: white; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; }
-        .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; border-left: 3px solid #d4af37; margin-bottom: 8px; }
-        
-        .btn-container { padding: 15px; }
-        .btn-wa { display: block; background: #0fb396; color: white; padding: 18px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 700; font-size: 18px; }
+        .accordion { background: #0f172a; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; }
+        .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; border-left: 3px solid #d4af37; margin-bottom: 8px; text-align: justify; }
+        .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
+        .btn-action { background: #334155; color: white; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; }
+        .btn-gold { background: #d4af37; }
+        .btn-green { background: #0fb396; }
+        .btn-diamond { background: #2563eb; grid-column: span 2; }
     </style>
 </head>
 <body>
@@ -35,7 +48,6 @@
     
     <div class="swiper main-swiper">
         <div class="swiper-wrapper">
-            <!-- 8 Slides generados por ID (f1 al f8) -->
             <div class="swiper-slide"><img id="f1" src=""><p id="desc1" class="slide-desc"></p></div>
             <div class="swiper-slide"><img id="f2" src=""><p id="desc2" class="slide-desc"></p></div>
             <div class="swiper-slide"><img id="f3" src=""><p id="desc3" class="slide-desc"></p></div>
@@ -51,10 +63,13 @@
     <div class="faq-section">
         <button class="accordion">...</button><div class="panel"><p></p></div>
         <button class="accordion">...</button><div class="panel"><p></p></div>
+        <button class="accordion">...</button><div class="panel"><p></p></div>
     </div>
 
-    <div class="btn-container">
-        <a id="btn-wa" href="#" class="btn-wa">💬 Consultar por WhatsApp</a>
+    <div class="button-grid">
+        <a id="btn-tienda" href="#" class="btn-action btn-gold">🛍️ Ver Tienda</a>
+        <a id="btn-wa" href="#" class="btn-action btn-green">💬 WhatsApp</a>
+        <a id="btn-planner" href="#" class="btn-action btn-diamond">¡Quiero ser Planner! 💎</a>
     </div>
 </div>
 
@@ -62,38 +77,58 @@
 <script>
     new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3500 }, pagination: { el: '.swiper-pagination' } });
 
-    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSU-bpcGNEsdx8LCiX7kkz4hVmn1AY0MoqjiXA4saZ9QYdKhCuzeN5qramsCIvYIpjMrM5nmaSvxg8V/pub?gid=0&single=true&output=csv';
+    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR4K0WrpNMABKiNO2BOx3QZOOMo2Nui81vWBq15ocGym7WC8D6hvVEmj7KNRACuRmxe48qxx1JZgzlo/pub?gid=0&single=true&output=csv';
 
     async function init() {
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
+        if (!id) return;
+
         const res = await fetch(SHEET_URL);
         const data = await res.text();
-        const rows = data.split('\n').map(row => row.split(',').map(c => c.replace(/^"|"$/g, '').trim()));
-        
-        const user = rows.find(r => r[0] && r[0].toLowerCase() === id.toLowerCase());
-        if (user) {
-            document.getElementById('nombre-visual').innerText = user[1];
-            document.getElementById('subtitulo-visual').innerText = user[2];
-            document.getElementById('btn-wa').href = 'https://wa.me/' + user[3];
-            
-            // Carga los 8 bloques (5 historia + 3 testimonios) correlativos
-            for(let i=0; i<8; i++) {
-                let fotoCol = 4 + (i * 2);
-                let descCol = 5 + (i * 2);
-                if(document.getElementById('f'+(i+1))) document.getElementById('f'+(i+1)).src = user[fotoCol] || "";
-                if(document.getElementById('desc'+(i+1))) document.getElementById('desc'+(i+1)).innerText = user[descCol] || "";
+        const rows = data.split('\n').map(row => {
+            const result = []; let cell = ''; let inQuotes = false;
+            for (let char of row) {
+                if (char === '"') inQuotes = !inQuotes;
+                else if (char === ',' && !inQuotes) { result.push(cell); cell = ''; }
+                else cell += char;
             }
-            // Acordeones (comienzan tras las 16 columnas anteriores, índice 20)
+            result.push(cell);
+            return result;
+        });
+
+        const user = rows.find(r => r[0] && r[0].trim() === id.trim());
+        if (user) {
+            document.getElementById('nombre-visual').innerText = user[1].trim();
+            document.getElementById('subtitulo-visual').innerText = user[2].trim();
+            document.getElementById('btn-wa').href = 'https://wa.me/' + user[3].trim();
+            document.getElementById('btn-tienda').href = user[4].trim();
+            document.getElementById('btn-planner').href = user[4].trim();
+            
+            for(let i=0; i<8; i++) {
+                let fotoCol = 5 + (i * 2);
+                let descCol = 6 + (i * 2);
+                if(document.getElementById('f'+(i+1))) document.getElementById('f'+(i+1)).src = user[fotoCol] ? user[fotoCol].trim() : "";
+                if(document.getElementById('desc'+(i+1))) document.getElementById('desc'+(i+1)).innerText = user[descCol] ? user[descCol].trim() : "";
+            }
+
             document.querySelectorAll('.accordion').forEach((acc, index) => {
-                let tCol = 20 + (index * 2); let cCol = 21 + (index * 2);
-                if (user[tCol]) acc.innerHTML = user[tCol];
+                let tCol = 21 + (index * 2); let cCol = 22 + (index * 2);
+                if (user[tCol]) acc.innerHTML = user[tCol].trim();
                 let panel = acc.nextElementSibling;
-                if (panel && user[cCol]) panel.querySelector('p').innerText = user[cCol];
+                if (panel && user[cCol]) panel.querySelector('p').innerText = user[cCol].trim();
             });
         }
     }
     init();
+
+    document.querySelectorAll('.accordion').forEach(acc => {
+        acc.addEventListener('click', function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
+        });
+    });
 </script>
 </body>
 </html>
