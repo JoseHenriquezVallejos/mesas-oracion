@@ -67,9 +67,7 @@
     </div>
 
     <div class="button-grid">
-        <a id="btn-tienda" href="#" class="btn-action btn-gold">🛍️ Ver Tienda</a>
         <a id="btn-wa" href="#" class="btn-action btn-green">💬 WhatsApp</a>
-        <a id="btn-planner" href="#" class="btn-action btn-diamond">¡Quiero ser Planner! 💎</a>
     </div>
 </div>
 
@@ -102,8 +100,6 @@
             document.getElementById('nombre-visual').innerText = user[1].trim();
             document.getElementById('subtitulo-visual').innerText = user[2].trim();
             document.getElementById('btn-wa').href = 'https://wa.me/' + user[3].trim();
-            document.getElementById('btn-tienda').href = user[4].trim();
-            document.getElementById('btn-planner').href = user[4].trim();
             
             for(let i=0; i<8; i++) {
                 let fotoCol = 5 + (i * 2);
