@@ -6,24 +6,20 @@
     <title>Estética Pro</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
-        body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
-        .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        body { margin: 0; font-family: sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
+        .chat-container { width: 100%; max-width: 700px; background: white; padding-bottom: 20px; }
         .header { background: #0b1220; color: #ffffff; padding: 30px 20px; text-align: center; border-bottom: 4px solid #d4af37; }
-        .header h1 { margin: 0; font-size: 26px; text-transform: uppercase; font-weight: 300; letter-spacing: 1px; }
-        .header p { margin: 5px 0 0 0; font-size: 14px; color: #d4af37; letter-spacing: 2px; }
-        
-        .swiper { width: 100%; padding: 20px 0 40px 0; background: #fff; }
-        .swiper-slide { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .swiper-slide img { width: 90%; max-height: 350px; object-fit: contain; border-radius: 8px; }
-        .slide-desc { font-size: 16px; color: #d4af37; margin-top: 15px; font-weight: 600; text-align: center; padding: 0 20px; line-height: 1.4; }
-        
-        .faq-section { padding: 20px; }
+        .header h1 { margin: 0; font-size: 26px; }
+        .header p { margin: 5px 0 0 0; font-size: 14px; color: #d4af37; }
+        .swiper { width: 100%; padding: 10px 10px 30px 10px; }
+        .swiper-slide { display: flex; flex-direction: column; align-items: center; }
+        .swiper-slide img { width: 100%; max-height: 350px; object-fit: contain; }
+        .slide-desc { font-size: 15px; color: #d4af37; margin-top: 15px; font-weight: 600; text-align: center; padding: 0 15px; }
+        .faq-section { padding: 15px; }
         .accordion { background: #0b1220; color: white; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; cursor: pointer; }
-        .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; border-left: 3px solid #d4af37; margin-bottom: 8px; font-size: 14px; text-align: justify; }
-        
-        .btn-container { padding: 20px; }
-        .btn-wa { display: block; background: #25d366; color: white; padding: 18px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 700; font-size: 18px; transition: background 0.3s; }
-        .btn-wa:hover { background: #128c7e; }
+        .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; border-left: 3px solid #d4af37; margin-bottom: 8px; }
+        .btn-container { padding: 15px; }
+        .btn-wa { display: block; background: #25d366; color: white; padding: 18px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 700; font-size: 18px; }
     </style>
 </head>
 <body>
@@ -35,13 +31,23 @@
     </div>
     
     <div class="swiper main-swiper">
-        <div class="swiper-wrapper" id="swiper-content">
-            </div>
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img id="f1" src=""><p id="desc1" class="slide-desc"></p></div>
+            <div class="swiper-slide"><img id="f2" src=""><p id="desc2" class="slide-desc"></p></div>
+            <div class="swiper-slide"><img id="f3" src=""><p id="desc3" class="slide-desc"></p></div>
+            <div class="swiper-slide"><img id="f4" src=""><p id="desc4" class="slide-desc"></p></div>
+            <div class="swiper-slide"><img id="f5" src=""><p id="desc5" class="slide-desc"></p></div>
+            <div class="swiper-slide"><img id="f6" src=""><p id="desc6" class="slide-desc"></p></div>
+            <div class="swiper-slide"><img id="f7" src=""><p id="desc7" class="slide-desc"></p></div>
+            <div class="swiper-slide"><img id="f8" src=""><p id="desc8" class="slide-desc"></p></div>
+        </div>
         <div class="swiper-pagination"></div>
     </div>
 
-    <div class="faq-section" id="faq-content">
-        </div>
+    <div class="faq-section">
+        <button class="accordion">...</button><div class="panel"><p></p></div>
+        <button class="accordion">...</button><div class="panel"><p></p></div>
+    </div>
 
     <div class="btn-container">
         <a id="btn-wa" href="#" class="btn-wa">💬 Consultar por WhatsApp</a>
@@ -50,57 +56,47 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    // IMPORTANTE: Pon aquí tu URL de publicación CSV de Google Sheets
-    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR4K0WrpNMABKiNO2BOx3QZOOMo2Nui81vWBq15ocGym7WC8D6hvVEmj7KNRACuRmxe48qxx1JZgzlo/pub?gid=0&single=true&output=csv';
+    const SHEET_URL = 'TU_URL_DE_PUBLICACION_CSV'; // Sustituye por tu URL
 
     async function init() {
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
-        if (!id) return;
-
-        try {
-            const res = await fetch(SHEET_URL);
-            const data = await res.text();
-            const rows = data.split('\n').map(row => row.split(',').map(c => c.replace(/^"|"$/g, '').trim()));
+        const res = await fetch(SHEET_URL);
+        const data = await res.text();
+        const rows = data.split('\n').map(row => row.split(',').map(c => c.replace(/^"|"$/g, '').trim()));
+        
+        const user = rows.find(r => r[0] && r[0].toLowerCase() === id.toLowerCase());
+        if (user) {
+            document.getElementById('nombre-visual').innerText = user[1];
+            document.getElementById('subtitulo-visual').innerText = user[2];
+            document.getElementById('btn-wa').href = 'https://wa.me/' + user[3];
             
-            const user = rows.find(r => r[0] && r[0].toLowerCase() === id.toLowerCase());
-            
-            if (user) {
-                document.getElementById('nombre-visual').innerText = user[1] || "";
-                document.getElementById('subtitulo-visual').innerText = user[2] || "";
-                document.getElementById('btn-wa').href = 'https://wa.me/' + (user[3] || "");
-
-                // Cargar 8 slides (Columna E = índice 4 en adelante)
-                const swiperWrapper = document.getElementById('swiper-content');
-                for(let i=0; i<8; i++) {
-                    let img = user[4 + (i * 2)];
-                    let desc = user[5 + (i * 2)];
-                    if(img) {
-                        swiperWrapper.innerHTML += `<div class="swiper-slide"><img src="${img}"><p class="slide-desc">${desc || ''}</p></div>`;
-                    }
-                }
-                
-                // Cargar Acordeones (Columna T = índice 19 en adelante)
-                const faqContent = document.getElementById('faq-content');
-                for(let i=0; i<2; i++) {
-                    let t = user[19 + (i * 2)];
-                    let c = user[20 + (i * 2)];
-                    if(t) {
-                        faqContent.innerHTML += `<button class="accordion">${t}</button><div class="panel"><p>${c}</p></div>`;
-                    }
-                }
-
-                // Inicializar Swiper y acordeones
-                new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3500 }, pagination: { el: '.swiper-pagination' } });
-                document.querySelectorAll('.accordion').forEach(acc => acc.addEventListener('click', function() {
-                    this.classList.toggle("active");
-                    var p = this.nextElementSibling;
-                    p.style.maxHeight = p.style.maxHeight ? null : p.scrollHeight + "px";
-                }));
+            // Cargar los 8 bloques que ya te funcionaban
+            for(let i=0; i<8; i++) {
+                let imgCol = 4 + (i * 2);
+                let txtCol = 5 + (i * 2);
+                if(document.getElementById('f'+(i+1))) document.getElementById('f'+(i+1)).src = user[imgCol] || "";
+                if(document.getElementById('desc'+(i+1))) document.getElementById('desc'+(i+1)).innerText = user[txtCol] || "";
             }
-        } catch (e) { console.error("Error al cargar la planilla", e); }
+            
+            // Cargar acordeones (A partir de la columna T, índice 19)
+            document.querySelectorAll('.accordion').forEach((acc, index) => {
+                let t = user[19 + (index * 2)];
+                let c = user[20 + (index * 2)];
+                if(t) acc.innerHTML = t;
+                let panel = acc.nextElementSibling;
+                if(panel && c) panel.querySelector('p').innerText = c;
+            });
+        }
     }
     init();
+
+    new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3500 }, pagination: { el: '.swiper-pagination' } });
+    document.querySelectorAll('.accordion').forEach(acc => acc.addEventListener('click', function() {
+        this.classList.toggle("active");
+        var p = this.nextElementSibling;
+        p.style.maxHeight = p.style.maxHeight ? null : p.scrollHeight + "px";
+    }));
 </script>
 </body>
 </html>
