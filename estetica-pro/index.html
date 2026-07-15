@@ -37,11 +37,14 @@
         .btn-green { background: #0fb396; }
         .btn-diamond { background: #2563eb; grid-column: span 2; }
         
-       .btn-wa {
+        .btn-wa {
             display: block !important;
             margin: 0 auto !important;
-            width: 90% !important;
+            width: 100% !important;        /* Cambiado de 90% a 100% para que sea igual de largo */
+            max-width: 700px;              /* Esto asegura que no se pase del ancho del contenedor */
             text-align: center !important;
+            padding: 18px !important;
+            box-sizing: border-box;        /* Importante para que el padding no rompa el ancho */
         }
         
     </style>
