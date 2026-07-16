@@ -103,7 +103,7 @@
         if (user) {
             document.getElementById('nombre-visual').innerText = user[1].trim();
             document.getElementById('subtitulo-visual').innerText = user[2].trim();
-            document.getElementById('btn-wa').href = 'https://wa.me/' + user[3].trim();
+            document.getElementById('btn-wa').href = user[3].trim();
             
             for(let i=0; i<8; i++) {
                 let fotoCol = 5 + (i * 2);
