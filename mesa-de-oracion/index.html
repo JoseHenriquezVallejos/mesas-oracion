@@ -82,7 +82,7 @@
             
             if (user) {
                 document.getElementById('nombre-visual').innerText = user[1].trim();
-                document.getElementById('btn-wa').href = 'https://wa.me/' + user[2].trim();
+                document.getElementById('btn-wa').href = user[3].trim();
 
                 const swiperWrapper = document.getElementById('swiper-content');
                 for(let i=0; i<3; i++) {
