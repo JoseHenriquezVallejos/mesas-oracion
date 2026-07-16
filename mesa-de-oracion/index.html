@@ -85,7 +85,7 @@
                 document.getElementById('btn-wa').href = 'https://wa.me/' + user[2].trim();
 
                 const swiperWrapper = document.getElementById('swiper-content');
-                for(let i=0; i<5; i++) {
+                for(let i=0; i<3; i++) {
                     if(user[3+i] && user[3+i].trim() !== "") {
                         // Agregamos loading="lazy" para que la imagen no bloquee la carga
                         swiperWrapper.innerHTML += `<div class="swiper-slide"><img src="${user[3+i].trim()}" loading="lazy"></div>`;
