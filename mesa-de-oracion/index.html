@@ -44,9 +44,9 @@
     
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    // --- CAMBIA ESTO POR EL ID QUE QUIERAS BUSCAR ---
-    const BUSCAR_ID = "2"; 
-    // -------------------------------------------------
+    // Toma el ID directamente de la URL: ?id=tu_id_aqui
+    const params = new URLSearchParams(window.location.search);
+    const BUSCAR_ID = params.get('id');
 
     let mySwiper;
     const oraciones = [
@@ -77,13 +77,17 @@
     const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTGa4eqew0ZuG7AI1ZPZyo27jWSj9drWXH8JTvOxVqOtl5U-1YSa0ozV4gk5wk9nj6zvOjdnp8pKAms/pub?gid=0&single=true&output=csv';
 
     async function init() {
+        if (!BUSCAR_ID) {
+            document.getElementById('nombre-visual').innerText = "ID NO ESPECIFICADO";
+            return;
+        }
+
         try {
             const res = await fetch(SHEET_URL);
             const data = await res.text();
             const rows = data.split('\n').map(r => r.split(','));
             
-            // Busca la fila cuyo primer elemento (columna A) coincide con BUSCAR_ID
-            const user = rows.find(row => row[0].trim() === BUSCAR_ID);
+            const user = rows.find(row => row[0] && row[0].trim() === BUSCAR_ID);
             
             if (user) {
                 document.getElementById('nombre-visual').innerText = user[1].trim();
@@ -113,7 +117,7 @@
                     }
                 }
             } else {
-                document.getElementById('nombre-visual').innerText = "ID no encontrado";
+                document.getElementById('nombre-visual').innerText = "ID NO ENCONTRADO";
             }
         } catch (e) { console.error("Error cargando datos:", e); }
     }
