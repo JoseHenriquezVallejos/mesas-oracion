@@ -44,6 +44,10 @@
     
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
+    // --- CAMBIA ESTO POR EL ID QUE QUIERAS BUSCAR ---
+    const BUSCAR_ID = "2"; 
+    // -------------------------------------------------
+
     let mySwiper;
     const oraciones = [
         { t: "❤️ Salud", id: "audio1" },
@@ -60,7 +64,6 @@
         document.querySelectorAll('audio').forEach(audio => { audio.pause(); });
     }
 
-    // Generar estructura de acordeones
     oraciones.forEach(item => {
         accContainer.innerHTML += `
             <div class="accordion-item">
@@ -78,7 +81,9 @@
             const res = await fetch(SHEET_URL);
             const data = await res.text();
             const rows = data.split('\n').map(r => r.split(','));
-            const user = rows[1];
+            
+            // Busca la fila cuyo primer elemento (columna A) coincide con BUSCAR_ID
+            const user = rows.find(row => row[0].trim() === BUSCAR_ID);
             
             if (user) {
                 document.getElementById('nombre-visual').innerText = user[1].trim();
@@ -87,30 +92,28 @@
                 const swiperWrapper = document.getElementById('swiper-content');
                 for(let i=0; i<3; i++) {
                     if(user[3+i] && user[3+i].trim() !== "") {
-                        // Agregamos loading="lazy" para que la imagen no bloquee la carga
                         swiperWrapper.innerHTML += `<div class="swiper-slide"><img src="${user[3+i].trim()}" loading="lazy"></div>`;
                     }
                 }
                 
                 mySwiper = new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
 
-                // CARGA DIFERIDA DE AUDIOS: Solo insertamos el HTML al abrir el acordeón
                 for(let i=0; i<6; i++) {
                     const audioLink = user[8 + i]?.trim();
                     if(audioLink && audioLink !== "") {
                         const container = document.getElementById(`audio${i+1}`);
-                        // Cambiamos el onclick para que inyecte el audio solo cuando el usuario lo toque
                         const btn = container.previousElementSibling;
                         btn.onclick = function() {
                             detenerAudios();
                             if(!container.innerHTML) {
-                                // preload="none" es la clave para que no se descargue hasta darle al play
                                 container.innerHTML = `<audio controls preload="none"><source src="${audioLink}" type="audio/mpeg"></audio>`;
                             }
                             container.style.display = (container.style.display==='block'?'none':'block');
                         };
                     }
                 }
+            } else {
+                document.getElementById('nombre-visual').innerText = "ID no encontrado";
             }
         } catch (e) { console.error("Error cargando datos:", e); }
     }
