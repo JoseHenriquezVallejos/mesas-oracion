@@ -110,7 +110,7 @@
                         btn.onclick = function() {
                             detenerAudios();
                             if(!container.innerHTML) {
-                                container.innerHTML = `<audio controls preload="none"><source src="${audioLink}" type="audio/mpeg"></audio>`;
+                                container.innerHTML = `<audio controls preload="auto"><source src="${audioLink}" type="audio/mpeg"></audio>`;
                             }
                             container.style.display = (container.style.display==='block'?'none':'block');
                         };
