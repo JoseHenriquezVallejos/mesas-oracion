@@ -46,8 +46,8 @@
 <script>
     const params = new URLSearchParams(window.location.search);
     const BUSCAR_ID = params.get('id');
-    let mySwiper;
     
+    // DEFINICIÓN ESTRICTA: Solo 4 botones
     const oraciones = [
         { t: "❤️ Salud", id: "audio1" },
         { t: "👪 Familia", id: "audio2" },
@@ -96,8 +96,9 @@
                     }
                 }
                 
-                mySwiper = new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
+                new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination' } });
 
+                // CARGA ESTRICTA: Solo busca los audios en los índices 8, 9, 10, 11 (los primeros 4)
                 for(let i=0; i<oraciones.length; i++) {
                     const audioLink = user[8 + i]?.trim();
                     if(audioLink && audioLink !== "") {
