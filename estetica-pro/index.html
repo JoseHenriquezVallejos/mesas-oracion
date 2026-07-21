@@ -94,49 +94,59 @@
             return;
         }
 
-        const res = await fetch(SHEET_URL);
-        const data = await res.text();
-        const rows = data.split('\n').map(row => {
-            const result = []; let cell = ''; let inQuotes = false;
-            for (let char of row) {
-                if (char === '"') inQuotes = !inQuotes;
-                else if (char === ',' && !inQuotes) { result.push(cell); cell = ''; }
-                else cell += char;
-            }
-            result.push(cell);
-            return result;
-        });
-
-        const cleanId = id.replace(/[\r\n]+/g, "").trim();
-
-        // .slice(1) ignora la primera fila de encabezados de la planilla
-        const user = rows.slice(1).find(r => r[0] && r[0].replace(/[\r\n]+/g, "").trim() === cleanId);
-
-        if (user) {
-            document.getElementById('nombre-visual').innerText = user[1] ? user[1].trim() : "";
-            document.getElementById('subtitulo-visual').innerText = user[2] ? user[2].trim() : "";
-            document.getElementById('btn-wa').href = user[3] ? user[3].trim() : "#";
+        try {
+            const res = await fetch(SHEET_URL, { cache: "no-store" });
+            const data = await res.text();
             
-            for(let i=0; i<8; i++) {
-                let fotoCol = 5 + (i * 2);
-                let descCol = 6 + (i * 2);
-                if(document.getElementById('f'+(i+1))) document.getElementById('f'+(i+1)).src = user[fotoCol] ? user[fotoCol].trim() : "";
-                if(document.getElementById('desc'+(i+1))) document.getElementById('desc'+(i+1)).innerText = user[descCol] ? user[descCol].trim() : "";
-            }
-
-            document.querySelectorAll('.accordion').forEach((acc, index) => {
-                let tCol = 21 + (index * 2); let cCol = 22 + (index * 2);
-                if (user[tCol]) acc.innerHTML = user[tCol].trim();
-                let panel = acc.nextElementSibling;
-                if (panel && user[cCol]) panel.querySelector('p').innerText = user[cCol].trim();
+            const rows = data.split('\n').map(row => {
+                const result = []; let cell = ''; let inQuotes = false;
+                for (let char of row) {
+                    if (char === '"') inQuotes = !inQuotes;
+                    else if (char === ',' && !inQuotes) { result.push(cell); cell = ''; }
+                    else cell += char;
+                }
+                result.push(cell);
+                return result;
             });
-        } else {
-            document.getElementById('nombre-visual').innerText = "Acceso no disponible";
-            document.getElementById('subtitulo-visual').innerText = "";
-            document.querySelector('.main-swiper').style.display = 'none';
-            document.querySelector('.faq-section').style.display = 'none';
-            document.getElementById('btn-wa').style.display = 'none';
+
+            const cleanId = id.replace(/[\r\n]+/g, "").trim();
+
+            // Búsqueda estrictamente exacta: si le agregaste "xx" u otras letras en la planilla, ya no hará match y fallará a propósito
+            const user = rows.slice(1).find(r => {
+                if (!r[0]) return false;
+                const rowId = r[0].replace(/[\r\n]+/g, "").trim();
+                return rowId === cleanId;
+            });
+
+            if (user) {
+                document.getElementById('nombre-visual').innerText = user[1] ? user[1].trim() : "";
+                document.getElementById('subtitulo-visual').innerText = user[2] ? user[2].trim() : "";
+                document.getElementById('btn-wa').href = user[3] ? user[3].trim() : "#";
+                
+                for(let i=0; i<8; i++) {
+                    let fotoCol = 5 + (i * 2);
+                    let descCol = 6 + (i * 2);
+                    if(document.getElementById('f'+(i+1))) document.getElementById('f'+(i+1)).src = user[fotoCol] ? user[fotoCol].trim() : "";
+                    if(document.getElementById('desc'+(i+1))) document.getElementById('desc'+(i+1)).innerText = user[descCol] ? user[descCol].trim() : "";
+                }
+
+                document.querySelectorAll('.accordion').forEach((acc, index) => {
+                    let tCol = 21 + (index * 2); let cCol = 22 + (index * 2);
+                    if (user[tCol]) acc.innerHTML = user[tCol].trim();
+                    let panel = acc.nextElementSibling;
+                    if (panel && user[cCol]) panel.querySelector('p').innerText = user[cCol].trim();
+                });
+                return;
+            }
+        } catch (error) {
+            console.error("Error leyendo la planilla:", error);
         }
+
+        document.getElementById('nombre-visual').innerText = "Acceso no disponible";
+        document.getElementById('subtitulo-visual').innerText = "";
+        document.querySelector('.main-swiper').style.display = 'none';
+        document.querySelector('.faq-section').style.display = 'none';
+        document.getElementById('btn-wa').style.display = 'none';
     }
     init();
 
