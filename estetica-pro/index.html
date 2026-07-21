@@ -84,9 +84,13 @@
     async function init() {
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
+        
         if (!id) {
             document.getElementById('nombre-visual').innerText = "Acceso no disponible";
             document.getElementById('subtitulo-visual').innerText = "";
+            document.querySelector('.main-swiper').style.display = 'none';
+            document.querySelector('.faq-section').style.display = 'none';
+            document.getElementById('btn-wa').style.display = 'none';
             return;
         }
 
@@ -103,11 +107,15 @@
             return result;
         });
 
-        const user = rows.find(r => r[0] && r[0].trim() === id.trim());
+        const cleanId = id.replace(/[\r\n]+/g, "").trim();
+
+        // .slice(1) ignora la primera fila de encabezados de la planilla
+        const user = rows.slice(1).find(r => r[0] && r[0].replace(/[\r\n]+/g, "").trim() === cleanId);
+
         if (user) {
-            document.getElementById('nombre-visual').innerText = user[1].trim();
-            document.getElementById('subtitulo-visual').innerText = user[2].trim();
-            document.getElementById('btn-wa').href = user[3].trim();
+            document.getElementById('nombre-visual').innerText = user[1] ? user[1].trim() : "";
+            document.getElementById('subtitulo-visual').innerText = user[2] ? user[2].trim() : "";
+            document.getElementById('btn-wa').href = user[3] ? user[3].trim() : "#";
             
             for(let i=0; i<8; i++) {
                 let fotoCol = 5 + (i * 2);
@@ -123,7 +131,6 @@
                 if (panel && user[cCol]) panel.querySelector('p').innerText = user[cCol].trim();
             });
         } else {
-            // Si no encuentra el ID o ya fue removido de la planilla
             document.getElementById('nombre-visual').innerText = "Acceso no disponible";
             document.getElementById('subtitulo-visual').innerText = "";
             document.querySelector('.main-swiper').style.display = 'none';
