@@ -77,14 +77,18 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3500 }, pagination: { el: '.swiper-pagination' } });
+    const swiperInstance = new Swiper('.main-swiper', { loop: true, autoplay: { delay: 3500 }, pagination: { el: '.swiper-pagination' } });
 
     const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR4K0WrpNMABKiNO2BOx3QZOOMo2Nui81vWBq15ocGym7WC8D6hvVEmj7KNRACuRmxe48qxx1JZgzlo/pub?gid=0&single=true&output=csv';
 
     async function init() {
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
-        if (!id) return;
+        if (!id) {
+            document.getElementById('nombre-visual').innerText = "Acceso no disponible";
+            document.getElementById('subtitulo-visual').innerText = "";
+            return;
+        }
 
         const res = await fetch(SHEET_URL);
         const data = await res.text();
@@ -118,6 +122,13 @@
                 let panel = acc.nextElementSibling;
                 if (panel && user[cCol]) panel.querySelector('p').innerText = user[cCol].trim();
             });
+        } else {
+            // Si no encuentra el ID o ya fue removido de la planilla
+            document.getElementById('nombre-visual').innerText = "Acceso no disponible";
+            document.getElementById('subtitulo-visual').innerText = "";
+            document.querySelector('.main-swiper').style.display = 'none';
+            document.querySelector('.faq-section').style.display = 'none';
+            document.getElementById('btn-wa').style.display = 'none';
         }
     }
     init();
