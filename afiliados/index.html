@@ -30,11 +30,12 @@
         .faq-section { padding: 15px; margin-top: 20px; }
         .accordion { background: #0f172a; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; border-radius: 8px; margin-bottom: 8px; font-weight: bold; }
         .panel { padding: 0 15px; background-color: #f8fafc; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; border-left: 3px solid #d4af37; margin-bottom: 8px; text-align: justify; }
-        .button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
-        .btn-action { background: #334155; color: white; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center; }
-        .btn-gold { background: #d4af37; color: #0f172a; }
+        
+        /* Contenedor de botones en columna para que ambos ocupen todo el ancho uniformemente */
+        .button-grid { display: flex; flex-direction: column; gap: 10px; padding: 15px; }
+        .btn-action { background: #334155; color: white; padding: 14px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 15px; display: flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; }
         .btn-green { background: #0fb396; }
-        .btn-hotmart { background: #eb5757; grid-column: span 2; }
+        .btn-hotmart { background: #eb5757; }
     </style>
 </head>
 <body>
